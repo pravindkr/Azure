@@ -297,7 +297,7 @@
 			"metadata": {
 				"description": "The location of resources such as templates and DSC modules that the script is dependent"
 				},
-			"defaultValue": "https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/application-workloads/active-directory/active-directory-new-domain-ha-2-dc-zones/azuredeploy.json"
+			"defaultValue": "https://raw.githubusercontent.com/pravindkr/Azure/main/B2B/azuredeploy.json"
 		},
 		"_artifactsLocationSasToken": {
 			"type": "securestring",
