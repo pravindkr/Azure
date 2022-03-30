@@ -1813,12 +1813,12 @@
 					"[resourceId('Microsoft.Compute/virtualMachines/extensions', variables('vmName')[0], 'CreateAdForest')]",
 					"[resourceId('Microsoft.Compute/virtualMachines/extensions', variables('vmName')[1], 'PepareBDC')]"
 					],
-					      "properties": {
-        "mode": "Incremental",
-        "templateLink": {
-          "uri": "[variables('vnetTemplateUri')]",
-          "contentVersion": "1.0.0.0"
-        },
+				"properties": {
+					"mode": "Incremental",
+					"templateLink": {
+						"uri": "[variables('vnetTemplateUri')]",
+						"contentVersion": "1.0.0.0"
+					},
 					"parameters": {
 						"virtualNetworkName": {
 							"value": "[variables('virtualNetworkName')]"
@@ -1856,7 +1856,7 @@
 					  "contentVersion": "1.0.0.0"
 					},					
 				"parameters": {
-				  "nicName": {
+				  "networkInterface9Name": {
 					"value": "[variables('networkInterface9Name')[1]]"
 				  },
 				"ipConfigurations": {
