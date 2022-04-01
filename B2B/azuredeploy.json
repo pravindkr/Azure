@@ -456,6 +456,11 @@
 			}
 			
 		],
+		"virtualNetworkNameWithSuffix": "[substring(concat(parameters('virtualNetworkName'), uniqueString(parameters('sqlStorageAccountName'),parameters('dcStorageAccountName'))),0,15)]",
+        "primaryDCIPAddressNameWithSuffix": "[substring(concat(variables('primaryDCIPAddressName'), uniqueString(parameters('sqlStorageAccountName'),parameters('dcStorageAccountName'))),0,15)]",
+        "backupDCIPAddressNameWithSuffix": "[substring(concat(variables('backupDCIPAddressName'), uniqueString(parameters('sqlStorageAccountName'),parameters('dcStorageAccountName'))),0,15)]",
+        "sql1AddressNameWithSuffix": "[substring(concat(variables('sql1AddressName'), uniqueString(parameters('sqlStorageAccountName'),parameters('dcStorageAccountName'))),0,15)]",
+        "sql0AddressNameWithSuffix": "[substring(concat(variables('sql0AddressName'), uniqueString(parameters('sqlStorageAccountName'),parameters('dcStorageAccountName'))),0,15)]",
         "loadBalancer2Name": "Intlb",
 		"publicIPAddressName": "PubliclbIP",
 		"loadBalancer1Name": "Extlb",
@@ -1163,7 +1168,7 @@
                 "count": "[variables('numberOfInstances')]"
             }
         },
-/*SQL Load Balancer*/
+/*SQL Load Balancer
             
 		{
             "type": "Microsoft.Resources/deployments",
@@ -1212,7 +1217,46 @@
                     }
                 }
             }
-        }, 
+        }, */
+			
+		{
+		  "name": "CreatingNetworkInterfaces",
+		  "type": "Microsoft.Resources/deployments",
+		  "apiVersion": "2020-10-01",
+		  "dependsOn": [
+			"Microsoft.Resources/deployments/LoadBalancers"
+		  ],
+		  "properties": {
+			"mode": "Incremental",
+			"templateLink": {
+			  "uri": "[variables('configuration').creatingNicsUrl]",
+			  "contentVersion": "1.0.0.0"
+			},
+			"parameters": {
+			  "location": {
+				"value": "[parameters('location')]"
+			  },
+			  "sqlVMName": {
+				"value": "[variables('vmSettings').sqlVMName]"
+			  },
+			  "sqlSubnetRef": {
+				"value": "[variables('subnet6Ref')]"
+			  },
+			  "sqlBEAddressPoolID": {
+				"value": "[variables('derivedIds').sqlBEAddressPoolID]"
+			  },
+			  "sqlwNicName": {
+				"value": "[variables('sqlwNicName')]"
+			  },
+			  "sql1AddressNameWithSuffix": {
+				"value": "[variables('sql1AddressNameWithSuffix')]"
+			  },
+			  "sql0AddressNameWithSuffix": {
+				"value": "[variables('sql0AddressNameWithSuffix')]"
+			  }
+			}
+		  }
+		},
 		 
 		{
 			"type": "Microsoft.Network/networkInterfaces",
@@ -2206,7 +2250,7 @@
                 }
             }
         },
-/*########################*/
+/*########################
 
         {
             "type": "Microsoft.Resources/deployments",
@@ -2571,7 +2615,7 @@
                     }
                 }
             }
-        }
+        }*/
     ],
     "outputs": {}
 }
