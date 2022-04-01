@@ -1,0 +1,159 @@
+			
+			#########################
+			{
+				"type": "Microsoft.Resources/deployments",
+				"apiVersion": "2020-10-01",
+				"name": "UpdateVNetDNS1",
+				"dependsOn": [
+					"[resourceId('Microsoft.Compute/virtualMachines/extensions', variables('vmName')[0], 'CreateAdForest')]",
+					"[resourceId('Microsoft.Compute/virtualMachines/extensions', variables('vmName')[1], 'PepareBDC')]"
+					],
+				"properties": {
+					"mode": "Incremental",
+					"templateLink": {
+						"uri": "[variables('vnetTemplateUri')]",
+						"contentVersion": "1.0.0.0"
+					},
+					"parameters": {
+						"virtualNetworkName": {
+							"value": "[variables('virtualNetworkName')]"
+							},
+						"virtualNetworkAddressRange": {
+							"value": "172.16.0.0/16"
+							},	
+						"subnetName": {
+							"value": "ADDSSubnet"
+							},
+						"DNSServerAddress": {
+							"value": [
+							"[variables('ipAddress')[0]]"
+								]
+							},
+						"location": {
+							"value": "[parameters('location')]"
+						}
+					}	}
+			},
+			{
+				"type": "Microsoft.Resources/deployments",
+				"apiVersion": "2020-10-01",
+				"name": "UpdateBDCNIC",
+				"dependsOn": [
+					"UpdateVNetDNS1"
+						],
+				"properties": {
+					"mode": "Incremental",
+					"templateLink": {
+					  "uri": "[variables('nicTemplateUri')]",
+					  "contentVersion": "1.0.0.0"
+					},					
+				"parameters": {
+				  "networkInterface9Name": {
+					"value": "[variables('networkInterface9Name')[1]]"
+				  },
+				"ipConfigurations": {
+					"value": [
+					  {
+						"name": "ipconfig1",
+						"properties": {
+						  "privateIPAllocationMethod": "Static",
+						  "privateIPAddress": "[variables('ipAddress')[1]]",
+						  "subnet": {
+							"id": "[variables('subnet5Ref')]"
+						  }
+						}
+					  }
+					]
+				  },
+				"dnsServers": {
+					"value": [
+					  "[variables('ipAddress')[0]]"
+					]
+				  },
+				"location": {
+					"value": "[parameters('location')]"
+						}
+					}
+			    }
+			},
+			{
+				"type": "Microsoft.Resources/deployments",
+				"apiVersion": "2020-10-01",
+				"name": "ConfiguringBackupADDomainController",
+				"dependsOn": [
+					"UpdateBDCNIC"
+					],
+			    "properties": {
+				"mode": "Incremental",
+				"templateLink": {
+				  "uri": "[variables('configureADBDCTemplateUri')]",
+				  "contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+				  "extName": {
+					"value": "[concat(variables('vmName')[1], '/PepareBDC')]"
+				  },
+				"location": {
+					"value": "[parameters('location')]"
+				  },
+				"adminUsername": {
+					"value": "[parameters('adminUsername')]"
+				  },
+				"adminPassword": {
+					"value": "[parameters('adminPassword')]"
+				  },
+				"domainName": {
+					"value": "[parameters('domainName')]"
+				  },
+				"adBDCConfigurationScript": {
+					"value": "[variables('adBDCConfigurationScript')]"
+				  },
+				"adBDCConfigurationFunction": {
+					"value": "[variables('adBDCConfigurationFunction')]"
+				  },
+				"adBDCConfigurationModulesURL": {
+					"value": "[variables('adBDCConfigurationModulesURL')]"
+				  },
+				"_artifactsLocationSasToken": {
+					"value": "[parameters('_artifactsLocationSasToken')]"
+						}
+					}
+						  }
+			},
+			{
+				"type": "Microsoft.Resources/deployments",
+				"apiVersion": "2020-10-01",
+				"name": "UpdateVNetDNS2",
+				"dependsOn": [
+					"ConfiguringBackupADDomainController"
+					],
+				"properties": {
+					"mode": "Incremental",
+					"templateLink": {
+						"uri": "[variables('vnetTemplateUri')]",
+						"contentVersion": "1.0.0.0"
+					},
+				"parameters": {
+				  "virtualNetworkName": {
+					"value": "[variables('virtualNetworkName')]"
+					},
+			    "virtualNetworkAddressRange": {
+					"value": "172.16.0.0/16"
+					},
+				"subnetName": {
+					"value": "[variables('subnet5Name')]"
+					},
+			    "subnetRange": {
+					"value": "172.16.0.224/28"
+					},
+				"DNSServerAddress": {
+					"value": "[variables('ipAddress')]"
+				  },
+				"location": {
+					"value": "[parameters('location')]"
+						}
+					}
+				}
+			}
+	]
+}

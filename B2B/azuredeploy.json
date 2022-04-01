@@ -201,6 +201,13 @@
                 "description": "The DNS Prefix for the Public IP Address for the Always On Cluster"
             }
         },
+		"sqlLBIPAddress": {
+		  "type": "string",
+		  "metadata": {
+			"description": "The IP address of the new SQL Server Internal Load Balancer"
+		  },
+		  "defaultValue": "172.16.0.244"
+		},
 		"ARSMasterNodeNamePrefix": {
             "defaultValue": "ARS-Master-Node",
             "type": "String",
@@ -461,6 +468,7 @@
             "rdpLBName": "rdpLoadBalancer",
             "sqlLBName": "sqlLoadBalancer"
         },
+		"SQLAOProbe": "SQLAlwaysOnEndPointProbe",
 		"vmSettings": {
 		  "availabilitySets": {
 			"sqlAvailabilitySetName": "sqlAvailabilitySet"
@@ -480,8 +488,8 @@
 		"sqlAOEPName": "[concat(parameters('deploymentPrefix'),'-hadr')]",
 		"sharePath": "[concat(parameters('deploymentPrefix'),'-fsw')]",
 		"clusterName": "[concat(parameters('deploymentPrefix'),'-fc')]",
-		"adPDCNicName": "[concat(variables('vmSettings').adPDCVMName,'-nic')]",
-		"adBDCNicName": "[concat(variables('vmSettings').adBDCVMName,'-nic')]",
+		"adPDCNicName": "ADPDCNic",
+		"adBDCNicName": "ADBDCNic",
 		"sqlwNicName": "[concat(variables('vmSettings').sqlwVMName,'-nic')]",		
 		"loadBalancer4Name": "SQLIntlb",
         "networkInterface1Name": "HSWebNic",
@@ -976,7 +984,7 @@
 					{
                         "name": "[variables('subnet6Name')]",
                         "properties": {
-                            "addressPrefix": "172.16.0.240/29",
+                            "addressPrefix": "172.16.0.240/28",
 							"networkSecurityGroup": {
 								"id": "[resourceId('Microsoft.Network/networkSecurityGroups', variables('networkSecurityGroup6Name'))]"
 								}
@@ -985,7 +993,7 @@
 					{
                         "name": "[variables('subnet11Name')]",
                         "properties": {
-                            "addressPrefix": "172.16.0.248/29"
+                            "addressPrefix": "172.16.1.240/28"
                         }
                     },
 					{
@@ -1184,8 +1192,8 @@
                     "sqlLBIPAddress": {
                         "value": "[parameters('sqlLBIPAddress')]"
                     },
-                    "staticSubnetRef": {
-                        "value": "[variables('sqlSubnetRef')]"
+                    "subnet6Ref": {
+                        "value": "[variables('subnet6Name')]"
                     },
                     "sqlLBBE": {
                         "value": "[variables('lbSettings').sqlLBBE]"
@@ -2292,7 +2300,7 @@
                                 "properties": {
                                     "privateIPAllocationMethod": "Dynamic",
                                     "subnet": {
-                                        "id": "[variables('sqlSubnetRef')]"
+                                        "id": "[variables('subnet6Ref')]"
                                     }
                                 }
                             }
@@ -2334,7 +2342,7 @@
                                 "properties": {
                                     "privateIPAllocationMethod": "Dynamic",
                                     "subnet": {
-                                        "id": "[variables('sqlSubnetRef')]"
+                                        "id": "[variables('subnet6Ref')]"
                                     },
                                     "publicIpAddress": {
                                         "id": "[resourceId('Microsoft.Network/publicIpAddresses', variables('sql0AddressNameWithSuffix'))]"
@@ -2384,7 +2392,7 @@
                                 "properties": {
                                     "privateIPAllocationMethod": "Dynamic",
                                     "subnet": {
-                                        "id": "[variables('sqlSubnetRef')]"
+                                        "id": "[variables('subnet6Ref')]"
                                     },
                                     "publicIpAddress": {
                                         "id": "[resourceId('Microsoft.Network/publicIpAddresses', variables('sql1AddressNameWithSuffix'))]"
@@ -2455,7 +2463,7 @@
                         "value": "[variables('sharePath')]"
                     },
                     "adPDCVMName": {
-                        "value": "[variables('vmSettings').adPDCVMName]"
+                        "value": "[variables('vmName')[0]]"
                     },
                     "sqlwVMName": {
                         "value": "[variables('vmSettings').sqlwVMName]"
@@ -2550,7 +2558,7 @@
                         "value": "[parameters('sqlLBIPAddress')]"
                     },
                     "adPDCVMName": {
-                        "value": "[variables('vmSettings').adPDCVMName]"
+                        "value": "[variables('vmName')[0]]"
                     },
                     "sqlwVMName": {
                         "value": "[variables('vmSettings').sqlwVMName]"
