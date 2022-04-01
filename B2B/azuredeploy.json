@@ -455,12 +455,12 @@
 					}
 			}
 			
-		],
+		],/*
 		"virtualNetworkNameWithSuffix": "[substring(concat(parameters('virtualNetworkName'), uniqueString(parameters('sqlStorageAccountName'),parameters('dcStorageAccountName'))),0,15)]",
         "primaryDCIPAddressNameWithSuffix": "[substring(concat(variables('primaryDCIPAddressName'), uniqueString(parameters('sqlStorageAccountName'),parameters('dcStorageAccountName'))),0,15)]",
         "backupDCIPAddressNameWithSuffix": "[substring(concat(variables('backupDCIPAddressName'), uniqueString(parameters('sqlStorageAccountName'),parameters('dcStorageAccountName'))),0,15)]",
         "sql1AddressNameWithSuffix": "[substring(concat(variables('sql1AddressName'), uniqueString(parameters('sqlStorageAccountName'),parameters('dcStorageAccountName'))),0,15)]",
-        "sql0AddressNameWithSuffix": "[substring(concat(variables('sql0AddressName'), uniqueString(parameters('sqlStorageAccountName'),parameters('dcStorageAccountName'))),0,15)]",
+        "sql0AddressNameWithSuffix": "[substring(concat(variables('sql0AddressName'), uniqueString(parameters('sqlStorageAccountName'),parameters('dcStorageAccountName'))),0,15)]",*/
         "loadBalancer2Name": "Intlb",
 		"publicIPAddressName": "PubliclbIP",
 		"loadBalancer1Name": "Extlb",
@@ -521,9 +521,9 @@
 			"172.16.0.228",
 			"172.16.0.229"
 		],
-		"vnetTemplateUri": "[uri(parameters('_artifactsLocation'), concat('nestedtemplatestemplates/vnet.json', parameters('_artifactsLocationSasToken')))]",
-		"nicTemplateUri": "[uri(parameters('_artifactsLocation'), concat('nestedtemplatestemplates/nic.json', parameters('_artifactsLocationSasToken')))]",
-		"configureADBDCTemplateUri": "[uri(parameters('_artifactsLocation'), concat('nestedtemplatestemplates/configureADBDC.json', parameters('_artifactsLocationSasToken')))]",
+		"vnetTemplateUri": "[uri(parameters('_artifactsLocation'), concat('nestedtemplates/vnet.json', parameters('_artifactsLocationSasToken')))]",
+		"nicTemplateUri": "[uri(parameters('_artifactsLocation'), concat('nestedtemplates/nic.json', parameters('_artifactsLocationSasToken')))]",
+		"configureADBDCTemplateUri": "[uri(parameters('_artifactsLocation'), concat('nestedtemplates/configureADBDC.json', parameters('_artifactsLocationSasToken')))]",
 		"adBDCConfigurationModulesURL": "[uri(parameters('_artifactsLocation'), 'DSC/ConfigureADBDC.ps1.zip')]",
 		"adBDCConfigurationScript": "ConfigureADBDC.ps1",
 		"adBDCConfigurationFunction": "ConfigureADBDC",
@@ -584,8 +584,8 @@
             "creatingNicsUrl": "[uri(parameters('_artifactsLocation'), concat('nestedtemplates/creatingNICS.json', parameters('_artifactsLocationSasToken')))]",
             "storageAccountVirtualNetworkPublicIP": "[uri(parameters('_artifactsLocation'), concat('nestedtemplates/storageAccountVirtualNetworkPublicIP.json', parameters('_artifactsLocationSasToken')))]",
             "provisioningVMs": "[uri(parameters('_artifactsLocation'), concat('nestedtemplates/provisioningVM', parameters('numberOfSqlVMDisks'),'.json', parameters('_artifactsLocationSasToken')))]",
-            "configuringBackupADVM": "[uri(parameters('_artifactsLocation'), concat('nested/configuringBackupADVM.json', parameters('_artifactsLocationSasToken')))]",
-            "preparingAlwaysOnSqlServer": "[uri(parameters('_artifactsLocation'), concat('nested/preparingSqlServer.json', parameters('_artifactsLocationSasToken')))]",
+            "configuringBackupADVM": "[uri(parameters('_artifactsLocation'), concat('nestedtemplates/configuringBackupADVM.json', parameters('_artifactsLocationSasToken')))]",
+            "preparingAlwaysOnSqlServer": "[uri(parameters('_artifactsLocation'), concat('nestedtemplates/preparingSqlServer.json', parameters('_artifactsLocationSasToken')))]",
             "configuringAlwaysOn": "[uri(parameters('_artifactsLocation'), concat('nested/configuringAlwaysOn.json', parameters('_artifactsLocationSasToken')))]",
             "adPDCModulesURL": "[uri(parameters('_artifactsLocation'),concat('scripts/CreateADPDC.ps1.zip', parameters('_artifactsLocationSasToken')))]",
             "adPDCConfigurationFunction": "CreateADPDC.ps1\\CreateADPDC",
@@ -1217,7 +1217,7 @@
                     }
                 }
             }
-        }, */
+        }, 
 			
 		{
 		  "name": "CreatingNetworkInterfaces",
@@ -1256,7 +1256,7 @@
 			  }
 			}
 		  }
-		},
+		},*/
 		 
 		{
 			"type": "Microsoft.Network/networkInterfaces",
@@ -2249,7 +2249,7 @@
                     }
                 }
             }
-        },
+        }
 /*########################
 
         {
