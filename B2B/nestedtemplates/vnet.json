@@ -14,8 +14,8 @@
         "Description": "The address range of the new VNET in CIDR format"
       }
     },
-    "subnetName": {
-      "type": "string",
+    "subnets": {
+      "type": "array",
       "metadata": {
         "Description": "The name of the subnet created in the new VNET"
       }
@@ -40,11 +40,6 @@
       }
     }
   },
-  "variables": {
-    "dhcpOptions": {
-      "dnsServers": "[parameters('DNSServerAddress')]"
-    }
-  },
   "resources": [
     {
       "type": "Microsoft.Network/virtualNetworks",
@@ -57,16 +52,11 @@
             "[parameters('virtualNetworkAddressRange')]"
           ]
         },
-        "dhcpOptions": "[if(empty(parameters('DNSServerAddress')), json('null'), variables('dhcpOptions'))]",
-        "subnets": [
-          {
-            "name": "[parameters('subnetName')]",
-            "properties": {
-              "addressPrefix": "[parameters('subnetRange')]"
-            }
-          }
-        ]
-      }
+        "dhcpOptions": {
+          "dnsServers": "[parameters('DNSServerAddress')]"
+        },
+        "subnets":"[parameters('subnetName')]"
+        }    
     }
   ]
 }
