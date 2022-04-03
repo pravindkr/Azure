@@ -2146,7 +2146,8 @@
                     }
                 }
             }
-        },				
+        },	
+/*		
 		{
 				"type": "Microsoft.Resources/deployments",
 				"apiVersion": "2020-10-01",
@@ -2188,13 +2189,13 @@
 						}
 					}
 			    }
-			},
+			 */
        {
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2020-10-01",
             "name": "ConfiguringBackupADVM",
             "dependsOn": [
-                "UpdatingDNStoBDCNIC"
+                "UpdatingDNStoPrimaryADVM"
             ],
             "properties": {
                 "mode": "Incremental",
