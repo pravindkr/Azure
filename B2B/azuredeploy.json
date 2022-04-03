@@ -2237,7 +2237,7 @@
 					"value": "[parameters('location')]"
 				  },
 				  "adBDCVMName": {
-					"value": "HQBDC"
+					"value": "[concat(variables('vmName')[1])]",
 				  },
 				  "adminUsername": {
 					"value": "[parameters('adminUsername')]"
