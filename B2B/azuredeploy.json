@@ -619,15 +619,15 @@
 		"numberOfGoldInstances": 1,
 		"numberOfInstances" : 2,
 		"configuration": {
-            "vnetwithDNSTemplateURL": "[uri(parameters('_artifactsLocation'), concat('nestedtemplates/vnet-with-dns-server.json', parameters('_artifactsLocationSasToken')))]",
-            "nicTemplateURL": "[uri(parameters('_artifactsLocation'), concat('nestedtemplates/nic.json', parameters('_artifactsLocationSasToken')))]",
-            "rdpIPAdressSetupURL": "[uri(parameters('_artifactsLocation'), concat('nestedtemplates/publicip-rdp.json', parameters('_artifactsLocationSasToken')))]",
-            "setupLBsUrl": "[uri(parameters('_artifactsLocation'), concat('nestedtemplates/setupLBs.json', parameters('_artifactsLocationSasToken')))]",
-            "creatingNicsUrl": "[uri(parameters('_artifactsLocation'), concat('nestedtemplates/creatingNICS.json', parameters('_artifactsLocationSasToken')))]",
-            "storageAccountVirtualNetworkPublicIP": "[uri(parameters('_artifactsLocation'), concat('nestedtemplates/storageAccountVirtualNetworkPublicIP.json', parameters('_artifactsLocationSasToken')))]",
-            "provisioningVMs": "[uri(parameters('_artifactsLocation'), concat('nestedtemplates/provisioningVM', parameters('numberOfSqlVMDisks'),'.json', parameters('_artifactsLocationSasToken')))]",
-            "configuringBackupADVM": "[uri(parameters('_artifactsLocation'), concat('nestedtemplates/configuringBackupADVM.json', parameters('_artifactsLocationSasToken')))]",
-            "preparingAlwaysOnSqlServer": "[uri(parameters('_artifactsLocation'), concat('nestedtemplates/preparingSqlServer.json', parameters('_artifactsLocationSasToken')))]",
+            "vnetwithDNSTemplateURL": "[uri(parameters('_artifactsLocation'), concat('nested/vnet-with-dns-server.json', parameters('_artifactsLocationSasToken')))]",
+            "nicTemplateURL": "[uri(parameters('_artifactsLocation'), concat('nested/nic.json', parameters('_artifactsLocationSasToken')))]",
+            "rdpIPAdressSetupURL": "[uri(parameters('_artifactsLocation'), concat('nested/publicip-rdp.json', parameters('_artifactsLocationSasToken')))]",
+            "setupLBsUrl": "[uri(parameters('_artifactsLocation'), concat('nested/setupLBs.json', parameters('_artifactsLocationSasToken')))]",
+            "creatingNicsUrl": "[uri(parameters('_artifactsLocation'), concat('nested/creatingNICS.json', parameters('_artifactsLocationSasToken')))]",
+            "storageAccountVirtualNetworkPublicIP": "[uri(parameters('_artifactsLocation'), concat('nested/storageAccountVirtualNetworkPublicIP.json', parameters('_artifactsLocationSasToken')))]",
+            "provisioningVMs": "[uri(parameters('_artifactsLocation'), concat('nested/provisioningVM', parameters('numberOfSqlVMDisks'),'.json', parameters('_artifactsLocationSasToken')))]",
+            "configuringBackupADVM": "[uri(parameters('_artifactsLocation'), concat('nested/configuringBackupADVM.json', parameters('_artifactsLocationSasToken')))]",
+            "preparingAlwaysOnSqlServer": "[uri(parameters('_artifactsLocation'), concat('nested/preparingSqlServer.json', parameters('_artifactsLocationSasToken')))]",
             "configuringAlwaysOn": "[uri(parameters('_artifactsLocation'), concat('nested/configuringAlwaysOn.json', parameters('_artifactsLocationSasToken')))]",
             "adPDCModulesURL": "[uri(parameters('_artifactsLocation'),concat('scripts/CreateADPDC.ps1.zip', parameters('_artifactsLocationSasToken')))]",
             "adPDCConfigurationFunction": "CreateADPDC.ps1\\CreateADPDC",
@@ -2222,7 +2222,7 @@
        {
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2020-10-01",
-            "name": "ConfiguringBackupADDomainController",
+            "name": "ConfiguringBackupADVM",
             "dependsOn": [
                 "UpdatingDNStoBDCNIC"
             ],
@@ -2262,7 +2262,7 @@
             "apiVersion": "2020-10-01",
             "name": "UpdatingDNSwithBackupADVM",
             "dependsOn": [
-                "ConfiguringBackupADDomainController"
+                "ConfiguringBackupADVM"
             ],
             "properties": {
                 "mode": "Incremental",
