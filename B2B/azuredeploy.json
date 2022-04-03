@@ -2111,83 +2111,18 @@
                         }
                     }
             },
-			
-/*			
-			{
-				"type": "Microsoft.Compute/virtualMachines/extensions",
-				"apiVersion": "2020-12-01",
-				"name": "[concat(variables('vmName')[0], '/CreateAdForest')]",
-				"location": "[parameters('location')]",
-				"dependsOn": [
-					"vmLoop"
-					],
-				"properties": {
-					"publisher": "Microsoft.Powershell",
-					"type": "DSC",
-					"typeHandlerVersion": "2.24",
-					"autoUpgradeMinorVersion": true,
-					"settings": {
-						"configuration": {
-						"url": "[uri(parameters('_artifactsLocation'), 'DSC/CreateADPDC.ps1.zip')]",
-						"script": "CreateADPDC.ps1",
-						"function": "CreateADPDC"
-						},
-					"configurationArguments": {
-						"domainName": "[parameters('domainName')]"
-					}
-					},
-					"protectedSettings": {
-						"configurationUrlSasToken": "[parameters('_artifactsLocationSasToken')]",
-					"configurationArguments": {
-						"adminCreds": {
-						"userName": "[parameters('adminUserName')]",
-						"password": "[parameters('adminPassword')]"
-							}
-						}
-					}
-				}
-			},
-			{
-				"type": "Microsoft.Compute/virtualMachines/extensions",
-				"apiVersion": "2020-12-01",
-				"name": "[concat(variables('vmName')[1], '/PepareBDC')]",
-				"location": "[parameters('location')]",
-					"dependsOn": [
-						"vmLoop"
-					],
-				"properties": {
-					"publisher": "Microsoft.Powershell",
-					"type": "DSC",
-					"typeHandlerVersion": "2.24",
-					"autoUpgradeMinorVersion": true,
-					"settings": {
-						"configuration": {
-							"url": "[uri(parameters('_artifactsLocation'), 'DSC/PrepareADBDC.ps1.zip')]",
-							"script": "PrepareADBDC.ps1",
-							"function": "PrepareADBDC"
-								},
-						"configurationArguments": {
-							"DNSServer": "[variables('iPAddress')[0]]"
-							}
-						},
-					"protectedSettings": {
-						"configurationUrlSasToken": "[parameters('_artifactsLocationSasToken')]"
-					}
-				}
-			},
-*/			
-			{
+
+        {
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2020-10-01",
             "name": "UpdatingDNStoPrimaryADVM",
             "dependsOn": [
-					"[resourceId('Microsoft.Compute/virtualMachines/extensions', variables('vmName')[0], 'InstallDomainController')]"
-	/*				"[resourceId('Microsoft.Compute/virtualMachines/extensions', variables('vmName')[1], 'PepareBDC')]" */
-					],
+                "[resourceId('Microsoft.Compute/virtualMachines/extensions', variables('vmName')[0], 'InstallDomainController')]"
+            ],
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
-                    "uri": "[variables('vnetTemplateUri')]",
+                    "uri": "[variables('configuration').vnetwithDNSTemplateURL]",
                     "contentVersion": "1.0.0.0"
                 },
                 "parameters": {
@@ -2205,13 +2140,13 @@
                     },
                     "DNSServerAddress": {
                         "value": [
-							"[variables('ipAddress')[0]]"
+                            "[variables('ipAddress')[0]]"
                         ]
                     }
                 }
             }
-        },
-		
+        },			
+/*		
 		{
 				"type": "Microsoft.Resources/deployments",
 				"apiVersion": "2020-10-01",
@@ -2254,12 +2189,13 @@
 					}
 			    }
 			},
+*/
        {
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2020-10-01",
             "name": "ConfiguringBackupADVM",
             "dependsOn": [
-                "UpdatingDNStoBDCNIC"
+                "vmLoop"
             ],
             "properties": {
                 "mode": "Incremental",
@@ -2297,14 +2233,14 @@
             "apiVersion": "2020-10-01",
             "name": "UpdatingDNSwithBackupADVM",
             "dependsOn": [
-                "ConfiguringBackupADVM"
+                "Microsoft.Resources/deployments/ConfiguringBackupADVM"
             ],
             "properties": {
                 "mode": "Incremental",
-				"templateLink": {
-				  "uri": "[variables('vnetTemplateUri')]",
-				  "contentVersion": "1.0.0.0"
-				},
+                "templateLink": {
+                    "uri": "[variables('configuration').vnetwithDNSTemplateURL]",
+                    "contentVersion": "1.0.0.0"
+                },
                 "parameters": {
                     "location": {
                         "value": "[parameters('location')]"
