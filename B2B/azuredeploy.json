@@ -2094,7 +2094,6 @@
                         "typeHandlerVersion": "2.75",
                         "autoUpgradeMinorVersion": true,
                         "settings": {
-							"configuration": {
                             "modulesURL": "[uri(parameters('_artifactsLocation'),concat('scripts/CreateADPDC.ps1.zip', parameters('_artifactsLocationSasToken')))]",
                             "configurationFunction": "CreateADPDC.ps1\\CreateADPDC",
                             "properties": {
