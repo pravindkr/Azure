@@ -2094,8 +2094,8 @@
                         "typeHandlerVersion": "2.75",
                         "autoUpgradeMinorVersion": true,
                         "settings": {
-                            "modulesURL": "[parameters('adPDCModulesURL')]",
-                            "configurationFunction": "[parameters('adPDCConfigurationFunction')]",
+                            "adPDCModulesURL": "[variables('configuration').adPDCModulesURL]",
+                            "configurationFunction": "[variables('configuration').adPDCConfigurationFunction]]",
                             "properties": {
                                 "domainName": "[parameters('domainName')]",
                                 "adminCreds": {
