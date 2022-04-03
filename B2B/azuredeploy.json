@@ -2095,7 +2095,7 @@
                         "autoUpgradeMinorVersion": true,
                         "settings": {
                             "adPDCModulesURL": "[variables('configuration').adPDCModulesURL]",
-                            "configurationFunction": "[variables('configuration').adPDCConfigurationFunction]]",
+                            "configurationFunction": "[variables('configuration').adPDCConfigurationFunction]",
                             "properties": {
                                 "domainName": "[parameters('domainName')]",
                                 "adminCreds": {
@@ -2208,7 +2208,7 @@
 					"value": "[parameters('location')]"
 				  },
 				  "adBDCVMName": {
-					"value": "[concat(variables('vmName')[1])]",
+					"value": "[concat(variables('vmName')[1])]"
 				  },
 				  "adminUsername": {
 					"value": "[parameters('adminUsername')]"
