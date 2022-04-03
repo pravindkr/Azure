@@ -2086,7 +2086,7 @@
                     "name": "[concat(variables('vmName')[0],'/InstallDomainController')]",
                     "location": "[parameters('location')]",
                     "dependsOn": [
-                        "vmLoop"
+                        "[resourceId('Microsoft.Compute/virtualMachines', variables('vmName')[0])]"
                     ],
                     "properties": {
                         "publisher": "Microsoft.Powershell",
@@ -2094,8 +2094,9 @@
                         "typeHandlerVersion": "2.75",
                         "autoUpgradeMinorVersion": true,
                         "settings": {
-                            "adPDCModulesURL": "[variables('configuration').adPDCModulesURL]",
-                            "configurationFunction": "[variables('configuration').adPDCConfigurationFunction]",
+							"configuration": {
+                            "modulesURL": "[uri(parameters('_artifactsLocation'),concat('scripts/CreateADPDC.ps1.zip', parameters('_artifactsLocationSasToken')))]",
+                            "configurationFunction": "CreateADPDC.ps1\\CreateADPDC",
                             "properties": {
                                 "domainName": "[parameters('domainName')]",
                                 "adminCreds": {
@@ -2145,8 +2146,7 @@
                     }
                 }
             }
-        },			
-/*		
+        },				
 		{
 				"type": "Microsoft.Resources/deployments",
 				"apiVersion": "2020-10-01",
@@ -2189,13 +2189,12 @@
 					}
 			    }
 			},
-*/
        {
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2020-10-01",
             "name": "ConfiguringBackupADVM",
             "dependsOn": [
-                "vmLoop"
+                "UpdatingDNStoBDCNIC"
             ],
             "properties": {
                 "mode": "Incremental",
