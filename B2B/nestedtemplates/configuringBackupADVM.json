@@ -33,8 +33,7 @@
       "properties": {
         "publisher": "Microsoft.Powershell",
         "type": "DSC",
-        "typeHandlerVersion": "2.24",
-        "autoUpgradeMinorVersion": true,
+        "typeHandlerVersion": "2.75",
         "settings": {
           "modulesURL": "[parameters('adBDCModulesURL')]",
           "configurationFunction": "[parameters('adBDCConfigurationFunction')]",
