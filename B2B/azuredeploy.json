@@ -206,7 +206,7 @@
 		  "metadata": {
 			"description": "The IP address of the new SQL Server Internal Load Balancer"
 		  },
-		  "defaultValue": "172.16.0.244"
+		  "defaultValue": "172.16.1.36"
 		},
 		"ARSMasterNodeNamePrefix": {
             "defaultValue": "ARS-Master-Node",
@@ -445,13 +445,13 @@
 		    {
 				"name": "[variables('subnet1Name')]",
 				"properties": {
-					"addressPrefix": "172.16.0.128/26"
+					"addressPrefix": "172.16.0.128/27"
 					}
 			},
 			{
 				"name": "[variables('subnet2Name')]",
 				"properties": {
-				"addressPrefix": "172.16.0.160/28"
+				"addressPrefix": "172.16.0.160/27"
 					}
 			}
 			
@@ -518,8 +518,8 @@
             "HQBDC"
         ],
 		"ipAddress": [
-			"172.16.0.228",
-			"172.16.0.229"
+			"172.16.1.4",
+			"172.16.1.5"
 		],
 		"vnetTemplateUri": "[uri(parameters('_artifactsLocation'), concat('nestedtemplates/vnet.json', parameters('_artifactsLocationSasToken')))]",
 		"nicTemplateUri": "[uri(parameters('_artifactsLocation'), concat('nestedtemplates/nic.json', parameters('_artifactsLocationSasToken')))]",
@@ -953,7 +953,7 @@
 					{
                         "name": "[variables('subnet2Name')]",
                         "properties": {
-                            "addressPrefix": "172.16.0.160/28",
+                            "addressPrefix": "172.16.0.160/27",
 							"networkSecurityGroup": {
 								"id": "[resourceId('Microsoft.Network/networkSecurityGroups', variables('networkSecurityGroup2Name'))]"
 								}
@@ -971,7 +971,7 @@
 					{
                         "name": "[variables('subnet4Name')]",
                         "properties": {
-                            "addressPrefix": "172.16.0.176/28",
+                            "addressPrefix": "172.16.0.224/27",
 							"networkSecurityGroup": {
 								"id": "[resourceId('Microsoft.Network/networkSecurityGroups', variables('networkSecurityGroup4Name'))]"
 								}
@@ -980,7 +980,7 @@
 					{
                         "name": "[variables('subnet5Name')]",
                         "properties": {
-                            "addressPrefix": "172.16.0.224/28",
+                            "addressPrefix": "172.16.1.0/27",
 							"networkSecurityGroup": {
 								"id": "[resourceId('Microsoft.Network/networkSecurityGroups', variables('networkSecurityGroup5Name'))]"
 								}
@@ -989,7 +989,7 @@
 					{
                         "name": "[variables('subnet6Name')]",
                         "properties": {
-                            "addressPrefix": "172.16.0.240/28",
+                            "addressPrefix": "172.16.1.32/27",
 							"networkSecurityGroup": {
 								"id": "[resourceId('Microsoft.Network/networkSecurityGroups', variables('networkSecurityGroup6Name'))]"
 								}
@@ -998,13 +998,13 @@
 					{
                         "name": "[variables('subnet11Name')]",
                         "properties": {
-                            "addressPrefix": "172.16.1.240/28"
+                            "addressPrefix": "172.16.1.224/27"
                         }
                     },
 					{
                         "name": "[variables('subnet8Name')]",
                         "properties": {
-                            "addressPrefix": "172.16.1.0/27",
+                            "addressPrefix": "172.16.1.64/27",
 							"networkSecurityGroup": {
 								"id": "[resourceId('Microsoft.Network/networkSecurityGroups', variables('networkSecurityGroup8Name'))]"
 								}
