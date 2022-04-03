@@ -2219,10 +2219,10 @@
 					"value": "[parameters('domainName')]"
 				  },
 				  "adBDCConfigurationFunction": {
-					"value": "[variables('configuration').adBDCConfigurationFunction]"
+					"value": "CreateADBDC.ps1\\CreateADBDC",
 				  },
 				  "adBDCModulesURL": {
-					"value": "[variables('configuration').adBDCModulesURL]"
+					"value": "[uri(parameters('_artifactsLocation'), concat('scripts/CreateADBDC.ps1.zip', parameters('_artifactsLocationSasToken')))]"
 				  }
 				}
             }
