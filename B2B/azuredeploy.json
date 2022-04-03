@@ -2219,7 +2219,7 @@
 					}
 			    }
 			},
-        {
+       {
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2020-10-01",
             "name": "ConfiguringBackupADDomainController",
@@ -2228,39 +2228,33 @@
             ],
             "properties": {
                 "mode": "Incremental",
-					"templateLink": {
-					  "uri": "[variables('configureADBDCTemplateUri')]",
-					  "contentVersion": "1.0.0.0"
+				"templateLink": {
+				  "uri": "[variables('configuration').configuringBackupADVM]",
+				  "contentVersion": "1.0.0.0"
 				},
-                "parameters": {
-					"extName": {
-						"value": "[concat(variables('vmName')[1], '/PepareBDC')]"
-					  },
-					"location": {
-                        "value": "[parameters('location')]"
-                    }, 
-                    "adminUsername": {
-                        "value": "[parameters('adminUsername')]"
-                    },
-                    "adminPassword": {
-                        "value": "[parameters('adminPassword')]"
-                    },
-                    "domainName": {
-                        "value": "[parameters('domainName')]"
-                    },
-					"adBDCConfigurationScript": {
-						"value": "[variables('adBDCConfigurationScript')]"
-					},
-					"adBDCConfigurationFunction": {
-						"value": "[variables('adBDCConfigurationFunction')]"
-					},
-					"adBDCConfigurationModulesURL": {
-					    "value": "[variables('adBDCConfigurationModulesURL')]"
-					},
-					"_artifactsLocationSasToken": {
-						"value": "[parameters('_artifactsLocationSasToken')]"
-					  }
-                }
+				"parameters": {
+				  "location": {
+					"value": "[parameters('location')]"
+				  },
+				  "adBDCVMName": {
+					"value": "HQBDC"
+				  },
+				  "adminUsername": {
+					"value": "[parameters('adminUsername')]"
+				  },
+				  "adminPassword": {
+					"value": "[parameters('adminPassword')]"
+				  },
+				  "domainName": {
+					"value": "[parameters('domainName')]"
+				  },
+				  "adBDCConfigurationFunction": {
+					"value": "[variables('configuration').adBDCConfigurationFunction]"
+				  },
+				  "adBDCModulesURL": {
+					"value": "[variables('configuration').adBDCModulesURL]"
+				  }
+				}
             }
         },
         {
