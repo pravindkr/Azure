@@ -430,30 +430,72 @@
 		"subnet10Name": "AzureBastionSubnet",
 		"subnet11Name": "GatewaySubnet",
 		"subnets": [
-			{
-				"name": "[variables('subnet9Name')]",
-				"properties": {
-					"addressPrefix": "172.16.0.0/26"
-					}
-			},
-			{
-				"name": "[variables('subnet10Name')]",
-				"properties": {
-				"addressPrefix": "172.16.0.64/26"
-					}
-			},
-		    {
-				"name": "[variables('subnet1Name')]",
-				"properties": {
-					"addressPrefix": "172.16.0.128/27"
-					}
-			},
-			{
-				"name": "[variables('subnet2Name')]",
-				"properties": {
-				"addressPrefix": "172.16.0.160/27"
-					}
-			}
+                {
+                        "name": "[variables('subnet9Name')]",
+                        "properties": {
+                            "addressPrefix": "172.16.0.0/26"
+                        }
+                },
+				{
+                        "name": "[variables('subnet10Name')]",
+                        "properties": {
+                            "addressPrefix": "172.16.0.64/26"
+                        }
+                },
+				{
+                        "name": "[variables('subnet1Name')]",
+                        "properties": {
+                            "addressPrefix": "172.16.0.128/27"
+                        }
+                },
+				{
+                        "name": "[variables('subnet2Name')]",
+                        "properties": {
+                            "addressPrefix": "172.16.0.160/27"
+                        }
+                },
+				{
+                        "name": "[variables('subnet3Name')]",
+                        "properties": {
+                            "addressPrefix": "172.16.0.192/27"
+                        }
+                },
+				{
+                        "name": "[variables('subnet4Name')]",
+                        "properties": {
+                            "addressPrefix": "172.16.0.224/27"
+                        }
+                },
+				{
+                        "name": "[variables('subnet5Name')]",
+                        "properties": {
+                            "addressPrefix": "172.16.1.0/27"
+                        }
+                },
+				{
+                        "name": "[variables('subnet6Name')]",
+                        "properties": {
+                            "addressPrefix": "172.16.1.32/27"
+                        }
+                },
+				{
+                        "name": "[variables('subnet11Name')]",
+                        "properties": {
+                            "addressPrefix": "172.16.1.224/27"
+                        }
+                },
+				{
+                        "name": "[variables('subnet8Name')]",
+                        "properties": {
+                            "addressPrefix": "172.16.1.64/27"
+                        }
+                },
+				{
+                        "name": "[variables('subnet7Name')]",
+                        "properties": {
+                            "addressPrefix": "172.16.16.0/20"
+                        }
+                }
 			
 		],/*
 		"virtualNetworkNameWithSuffix": "[substring(concat(parameters('virtualNetworkName'), uniqueString(parameters('sqlStorageAccountName'),parameters('dcStorageAccountName'))),0,15)]",
@@ -2180,23 +2222,23 @@
         {
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2020-10-01",
-            "name": "ConfiguringBackupADVM",
+            "name": "ConfiguringBackupADDomainController",
             "dependsOn": [
                 "UpdatingDNStoBDCNIC"
             ],
             "properties": {
                 "mode": "Incremental",
-                "templateLink": {
-                    "uri": "[variables('configuration').configuringBackupADVM]",
-                    "contentVersion": "1.0.0.0"
-                },
+					"templateLink": {
+					  "uri": "[variables('configureADBDCTemplateUri')]",
+					  "contentVersion": "1.0.0.0"
+				},
                 "parameters": {
-                    "location": {
+					"extName": {
+						"value": "[concat(variables('vmName')[1], '/PepareBDC')]"
+					  },
+					"location": {
                         "value": "[parameters('location')]"
-                    },
-                    "adBDCVMName": {
-                        "value": "[variables('vmName')[1]]"
-                    },
+                    }, 
                     "adminUsername": {
                         "value": "[parameters('adminUsername')]"
                     },
@@ -2206,12 +2248,18 @@
                     "domainName": {
                         "value": "[parameters('domainName')]"
                     },
-                    "adBDCConfigurationFunction": {
-                        "value": "[variables('configuration').adBDCConfigurationFunction]"
-                    },
-                    "adBDCModulesURL": {
-                        "value": "[variables('configuration').adBDCModulesURL]"
-                    }
+					"adBDCConfigurationScript": {
+						"value": "[variables('adBDCConfigurationScript')]"
+					},
+					"adBDCConfigurationFunction": {
+						"value": "[variables('adBDCConfigurationFunction')]"
+					},
+					"adBDCConfigurationModulesURL": {
+					    "value": "[variables('adBDCConfigurationModulesURL')]"
+					},
+					"_artifactsLocationSasToken": {
+						"value": "[parameters('_artifactsLocationSasToken')]"
+					  }
                 }
             }
         },
@@ -2220,14 +2268,14 @@
             "apiVersion": "2020-10-01",
             "name": "UpdatingDNSwithBackupADVM",
             "dependsOn": [
-                "Microsoft.Resources/deployments/ConfiguringBackupADVM"
+                "ConfiguringBackupADDomainController"
             ],
             "properties": {
                 "mode": "Incremental",
-                "templateLink": {
-                    "uri": "[variables('configuration').vnetwithDNSTemplateURL]",
-                    "contentVersion": "1.0.0.0"
-                },
+				"templateLink": {
+				  "uri": "[variables('vnetTemplateUri')]",
+				  "contentVersion": "1.0.0.0"
+				},
                 "parameters": {
                     "location": {
                         "value": "[parameters('location')]"
