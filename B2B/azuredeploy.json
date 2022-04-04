@@ -1217,7 +1217,6 @@
             "apiVersion": "2020-10-01",
             "name": "LoadBalancers",
             "dependsOn": [
-                "[variables('virtualNetworkName')]",
 				"[parameters('sqlLBIPAddress')]"
             ],
             "properties": {
