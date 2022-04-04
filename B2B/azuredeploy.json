@@ -610,12 +610,12 @@
         "Sunday": true,
         "Never": false,
         "Everyday": true,
-        "numberOfHySecureMgmtInstances": 2,
-		"numberOfHyWorksControllerInstances": 2,
+        "numberOfHySecureMgmtInstances": 1,
+		"numberOfHyWorksControllerInstances": 1,
 		"numberOfADDSInstances": 2,
-		"numberOfSQLInstances": 2,
-		"numberOfARSMasterInstances": 3,
-		"numberOfARSDataInstances": 2,
+		"numberOfSQLInstances": 1,
+		"numberOfARSMasterInstances": 1,
+		"numberOfARSDataInstances": 1,
 		"numberOfGoldInstances": 1,
 		"numberOfInstances" : 2,
 		"configuration": {
@@ -1614,6 +1614,7 @@
                 ]
             }
         },
+	/*	
 	/*HySecure Web Tier Virtual Machine*/
         {
             "type": "Microsoft.Compute/virtualMachines",
@@ -2023,6 +2024,7 @@
                 }
             }
         },
+		*/
 /*Domain Controller ADDS Tier Virtual Machine*/		
 		{
 			"type": "Microsoft.Compute/virtualMachines",
@@ -2094,8 +2096,8 @@
                         "typeHandlerVersion": "2.75",
                         "autoUpgradeMinorVersion": true,
                         "settings": {
-                            "modulesURL": "[uri(parameters('_artifactsLocation'),concat('scripts/CreateADPDC.ps1.zip', parameters('_artifactsLocationSasToken')))]",
-                            "configurationFunction": "CreateADPDC.ps1\\CreateADPDC",
+                            "modulesURL": "[variables('configuration').adPDCModulesURL]"
+                            "configurationFunction": "[variables('configuration').adPDCConfigurationFunction]"
                             "properties": {
                                 "domainName": "[parameters('domainName')]",
                                 "adminCreds": {
@@ -2219,10 +2221,10 @@
 					"value": "[parameters('domainName')]"
 				  },
 				  "adBDCConfigurationFunction": {
-					"value": "CreateADBDC.ps1\\CreateADBDC"
+					"value": "[variables('configuration').adBDCConfigurationFunction]"
 				  },
 				  "adBDCModulesURL": {
-					"value": "[uri(parameters('_artifactsLocation'), concat('scripts/CreateADBDC.ps1.zip', parameters('_artifactsLocationSasToken')))]"
+					"value": "[variables('configuration').adBDCModulesURL]"
 				  }
 				}
             }
