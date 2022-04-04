@@ -497,12 +497,12 @@
                         }
                 }
 			
-		],/*
+		],
 		"virtualNetworkNameWithSuffix": "[substring(concat(parameters('virtualNetworkName'), uniqueString(parameters('sqlStorageAccountName'),parameters('dcStorageAccountName'))),0,15)]",
         "primaryDCIPAddressNameWithSuffix": "[substring(concat(variables('primaryDCIPAddressName'), uniqueString(parameters('sqlStorageAccountName'),parameters('dcStorageAccountName'))),0,15)]",
         "backupDCIPAddressNameWithSuffix": "[substring(concat(variables('backupDCIPAddressName'), uniqueString(parameters('sqlStorageAccountName'),parameters('dcStorageAccountName'))),0,15)]",
         "sql1AddressNameWithSuffix": "[substring(concat(variables('sql1AddressName'), uniqueString(parameters('sqlStorageAccountName'),parameters('dcStorageAccountName'))),0,15)]",
-        "sql0AddressNameWithSuffix": "[substring(concat(variables('sql0AddressName'), uniqueString(parameters('sqlStorageAccountName'),parameters('dcStorageAccountName'))),0,15)]",*/
+        "sql0AddressNameWithSuffix": "[substring(concat(variables('sql0AddressName'), uniqueString(parameters('sqlStorageAccountName'),parameters('dcStorageAccountName'))),0,15)]",
         "loadBalancer2Name": "Intlb",
 		"publicIPAddressName": "PubliclbIP",
 		"loadBalancer1Name": "Extlb",
@@ -1210,7 +1210,7 @@
                 "count": "[variables('numberOfInstances')]"
             }
         },
-/*SQL Load Balancer
+/*SQL Load Balancer*/
             
 		{
             "type": "Microsoft.Resources/deployments",
@@ -1298,7 +1298,7 @@
 			  }
 			}
 		  }
-		},*/
+		},
 		 
 		{
 			"type": "Microsoft.Network/networkInterfaces",
@@ -1613,8 +1613,7 @@
                     }
                 ]
             }
-        },
-	/*	
+        },	
 	/*HySecure Web Tier Virtual Machine*/
         {
             "type": "Microsoft.Compute/virtualMachines",
@@ -2024,7 +2023,6 @@
                 }
             }
         },
-		*/
 /*Domain Controller ADDS Tier Virtual Machine*/		
 		{
 			"type": "Microsoft.Compute/virtualMachines",
@@ -2081,39 +2079,38 @@
 					}
 				}
 			},
-			
-			{
-                    "type": "Microsoft.Compute/virtualMachines/extensions",
-                    "apiVersion": "2020-12-01",
-                    "name": "[concat(variables('vmName')[0],'/InstallDomainController')]",
-                    "location": "[parameters('location')]",
-                    "dependsOn": [
-                        "[resourceId('Microsoft.Compute/virtualMachines', variables('vmName')[0])]"
-                    ],
+
+        {
+            "type": "Microsoft.Compute/virtualMachines/extensions",
+            "apiVersion": "2020-12-01",
+            "name": "[concat(variables('vmName')[0],'/InstallDomainController')]",
+            "location": "[parameters('location')]",
+            "dependsOn": [
+                "vmLoop"
+            ],
+            "properties": {
+                "publisher": "Microsoft.Powershell",
+                "type": "DSC",
+                "typeHandlerVersion": "2.75",
+                "autoUpgradeMinorVersion": true,
+                "settings": {
+                    "modulesURL": "[variables('configuration').adPDCModulesURL]",
+                    "configurationFunction": "[variables('configuration').adPDCConfigurationFunction]",
                     "properties": {
-                        "publisher": "Microsoft.Powershell",
-                        "type": "DSC",
-                        "typeHandlerVersion": "2.75",
-                        "autoUpgradeMinorVersion": true,
-                        "settings": {
-                            "modulesURL": "[variables('configuration').adPDCModulesURL]"
-                            "configurationFunction": "[variables('configuration').adPDCConfigurationFunction]"
-                            "properties": {
-                                "domainName": "[parameters('domainName')]",
-                                "adminCreds": {
-                                    "userName": "[parameters('adminUsername')]",
-                                    "password": "PrivateSettingsRef:adminPassword"
-                                }
-                            }
-                        },
-                        "protectedSettings": {
-                            "items": {
-                                "adminPassword": "[parameters('adminPassword')]"
-                            }
+                        "domainName": "[parameters('domainName')]",
+                        "adminCreds": {
+                            "userName": "[parameters('adminUsername')]",
+                            "password": "PrivateSettingsRef:adminPassword"
                         }
                     }
-            },
-
+                },
+                "protectedSettings": {
+                    "items": {
+                        "adminPassword": "[parameters('adminPassword')]"
+                    }
+                }
+            }
+        },
         {
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2020-10-01",
@@ -2147,15 +2144,16 @@
                     }
                 }
             }
-        },	
-/*		
+        },
+		
 		{
-				"type": "Microsoft.Resources/deployments",
-				"apiVersion": "2020-10-01",
-				"name": "UpdatingDNStoBDCNIC",
-				"dependsOn": [
-					"UpdatingDNStoPrimaryADVM"
-						],
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2020-10-01",
+            "name": "UpdatingDNStoBDCNIC",
+            "dependsOn": [
+                "[resourceId('Microsoft.Compute/virtualMachines/extensions', variables('vmName')[0], 'InstallDomainController')]",
+				"UpdatingDNStoPrimaryADVM"
+            ],
 				"properties": {
 					"mode": "Incremental",
 					"templateLink": {
@@ -2187,46 +2185,42 @@
 				  },
 				"location": {
 					"value": "[parameters('location')]"
-						}
 					}
-			    }
-			 */
-       {
-            "type": "Microsoft.Resources/deployments",
-            "apiVersion": "2020-10-01",
-            "name": "ConfiguringBackupADVM",
+				}
+		    }
+		},
+		
+		
+		
+        {
+            "type": "Microsoft.Compute/virtualMachines/extensions",
+            "apiVersion": "2020-12-01",
+            "name": "[concat(variables('vmName')[1],'/CreateBDC')]",
+            "location": "[parameters('location')]",
             "dependsOn": [
-                "UpdatingDNStoPrimaryADVM"
+                "UpdatingDNStoBDCNIC"
             ],
             "properties": {
-                "mode": "Incremental",
-				"templateLink": {
-				  "uri": "[variables('configuration').configuringBackupADVM]",
-				  "contentVersion": "1.0.0.0"
-				},
-				"parameters": {
-				  "location": {
-					"value": "[parameters('location')]"
-				  },
-				  "adBDCVMName": {
-					"value": "[concat(variables('vmName')[1])]"
-				  },
-				  "adminUsername": {
-					"value": "[parameters('adminUsername')]"
-				  },
-				  "adminPassword": {
-					"value": "[parameters('adminPassword')]"
-				  },
-				  "domainName": {
-					"value": "[parameters('domainName')]"
-				  },
-				  "adBDCConfigurationFunction": {
-					"value": "[variables('configuration').adBDCConfigurationFunction]"
-				  },
-				  "adBDCModulesURL": {
-					"value": "[variables('configuration').adBDCModulesURL]"
-				  }
-				}
+                "publisher": "Microsoft.Powershell",
+                "type": "DSC",
+                "typeHandlerVersion": "2.75",
+                "autoUpgradeMinorVersion": true,
+                "settings": {
+                    "modulesURL": "[variables('configuration').adBDCModulesURL]",
+                    "configurationFunction": "[variables('configuration').adBDCConfigurationFunction]",
+                    "properties": {
+                        "domainName": "[parameters('domainName')]",
+                        "adminCreds": {
+                            "userName": "[parameters('adminUsername')]",
+                            "password": "PrivateSettingsRef:adminPassword"
+                        }
+                    }
+                },
+                "protectedSettings": {
+                    "items": {
+                        "adminPassword": "[parameters('adminPassword')]"
+                    }
+                }
             }
         },
         {
@@ -2234,7 +2228,8 @@
             "apiVersion": "2020-10-01",
             "name": "UpdatingDNSwithBackupADVM",
             "dependsOn": [
-                "Microsoft.Resources/deployments/ConfiguringBackupADVM"
+                "[resourceId('Microsoft.Compute/virtualMachines/extensions', variables('vmName')[1], 'CreateBDC')]",
+				"UpdatingDNStoBDCNIC"
             ],
             "properties": {
                 "mode": "Incremental",
@@ -2263,8 +2258,7 @@
                     }
                 }
             }
-        }
-/*########################
+        },
 
         {
             "type": "Microsoft.Resources/deployments",
@@ -2629,7 +2623,7 @@
                     }
                 }
             }
-        }*/
+        }
     ],
     "outputs": {}
 }
