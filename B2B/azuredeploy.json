@@ -102,10 +102,10 @@
         },
         "adminPassword": {
             "type": "SecureString",
-			"defaultValue": "Demo@1234567890",
             "metadata": {
                 "description": "Admin password"
-            }
+            },
+			"defaultValue": "Demo@1234567890"
         },
 		"domainName": {
             "type": "string",
@@ -192,8 +192,47 @@
             "type": "SecureString",
             "metadata": {
                 "description": "The SQL Server Service Account password"
-            }
+            },
+			"defaultValue": "Demo@1234567890"
         },
+		"sqlStorageAccountName": {
+			"type": "string",
+			"metadata": {
+				"description": "The name of Sql Server Storage Account"
+			},
+			"defaultValue": "azasplsqlstg"
+		},
+		"sqlStorageAccountType": {
+		  "type": "string",
+		  "allowedValues": [
+		    "Standard_LRS",
+			"Premium_LRS"
+		],
+		  "metadata": {
+			"description": "The type of the Sql Server Storage Account created"
+		  },
+		  "defaultValue": "Standard_LRS"
+		},
+		"dcStorageAccountName": {
+		  "type": "string",
+		  "metadata": {
+			"description": "The name of  DC Storage Account"
+		  },
+		  "defaultValue": "azaspldcstg"
+		},
+		"dcStorageAccountType": {
+		  "type": "string",
+		  "allowedValues": [
+			"Standard_LRS",
+			"Standard_GRS",
+			"Standard_RAGRS",
+			"Premium_LRS"
+		  ],
+		  "metadata": {
+			"description": "The type of the DC Storage Account created"
+		  },
+		  "defaultValue": "Standard_LRS"
+		},
 		"deploymentPrefix": {
             "defaultValue": "aodns",
             "type": "String",
@@ -498,9 +537,6 @@
                 }
 			
 		],
-		"virtualNetworkNameWithSuffix": "[substring(concat(parameters('virtualNetworkName'), uniqueString(parameters('sqlStorageAccountName'),parameters('dcStorageAccountName'))),0,15)]",
-        "primaryDCIPAddressNameWithSuffix": "[substring(concat(variables('primaryDCIPAddressName'), uniqueString(parameters('sqlStorageAccountName'),parameters('dcStorageAccountName'))),0,15)]",
-        "backupDCIPAddressNameWithSuffix": "[substring(concat(variables('backupDCIPAddressName'), uniqueString(parameters('sqlStorageAccountName'),parameters('dcStorageAccountName'))),0,15)]",
         "sql1AddressNameWithSuffix": "[substring(concat(variables('sql1AddressName'), uniqueString(parameters('sqlStorageAccountName'),parameters('dcStorageAccountName'))),0,15)]",
         "sql0AddressNameWithSuffix": "[substring(concat(variables('sql0AddressName'), uniqueString(parameters('sqlStorageAccountName'),parameters('dcStorageAccountName'))),0,15)]",
         "loadBalancer2Name": "Intlb",
@@ -516,12 +552,15 @@
             "sqlLBName": "sqlLoadBalancer"
         },
 		"SQLAOProbe": "SQLAlwaysOnEndPointProbe",
+		"sql1AddressName": "sql1IP",
+        "sql0AddressName": "sql0IP",
 		"vmSettings": {
 		  "availabilitySets": {
 			"sqlAvailabilitySetName": "sqlAvailabilitySet"
 		  },
 		  "noOfSqlVMs": 2,
 		  "vmContainerName": "vhds",
+		  "sqlVMName": "sqlserver-",
 		  "sqlwVMName": "cluster-fsw",
 		  "windowsImagePublisher": "MicrosoftWindowsServer",
 		  "windowsImageOffer": "WindowsServer",
@@ -1215,6 +1254,7 @@
 		{
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2020-10-01",
+			"comments": "Create Load Balancers for SQL",
             "name": "LoadBalancers",
             "dependsOn": [
 				"[parameters('sqlLBIPAddress')]"
@@ -2258,6 +2298,7 @@
                 }
             }
         },
+		
 
         {
             "type": "Microsoft.Resources/deployments",
@@ -2323,7 +2364,7 @@
                     }
                 }
             }
-        },
+        }, 
         {
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2020-10-01",
