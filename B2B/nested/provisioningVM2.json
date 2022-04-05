@@ -2,45 +2,6 @@
     "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
-      "adPDCVMName": {
-        "type": "string"
-      },
-      "adAvailabilitySetName": {
-        "type": "string"
-      },
-      "adVMSize": {
-        "type": "string"
-      },
-      "adminUsername": {
-        "type": "string"
-      },
-      "adminPassword": {
-        "type": "securestring"
-      },
-      "adImagePublisher": {
-        "type": "string"
-      },
-      "adImageOffer": {
-        "type": "string"
-      },
-      "adImageSKU": {
-        "type": "string"
-      },
-      "adPDCNicName": {
-        "type": "string"
-      },
-      "adPDCConfigurationFunction": {
-        "type": "string"
-      },
-      "adPDCModulesURL": {
-        "type": "string"
-      },
-      "adBDCVMName": {
-        "type": "string"
-      },
-      "adBDCNicName": {
-        "type": "string"
-      },
       "sqlVMName": {
         "type": "string"
       },
@@ -48,9 +9,6 @@
         "type": "string"
       },
       "sqlStorageAccountName": {
-        "type": "string"
-      },
-      "dcStorageAccountName": {
         "type": "string"
       },
       "sqlAvailabilitySetName": {
@@ -99,19 +57,6 @@
     "resources": [
       {
         "type": "Microsoft.Compute/availabilitySets",
-        "name": "[parameters('adAvailabilitySetName')]",
-        "apiVersion": "2020-12-01",
-        "location": "[parameters('location')]",
-        "sku": {
-          "name": "Aligned"
-          },
-          "properties": { 
-          "platformFaultDomainCount": 2,
-          "platformUpdateDomainCount": 5
-          }
-      },
-      {
-        "type": "Microsoft.Compute/availabilitySets",
         "name": "[parameters('sqlAvailabilitySetName')]",
         "apiVersion": "2020-12-01",
         "location": "[parameters('location')]",
@@ -121,153 +66,6 @@
         "properties": {
           "platformFaultDomainCount": 2,
           "platformUpdateDomainCount": 3
-        }
-      },
-      {
-        "apiVersion": "2020-12-01",
-        "type": "Microsoft.Compute/virtualMachines",
-        "name": "[parameters('adPDCVMName')]",
-        "location": "[parameters('location')]",
-        "dependsOn": [
-          "[resourceId('Microsoft.Compute/availabilitySets/',parameters('adAvailabilitySetName'))]"
-        ],
-        "properties": {
-          "hardwareProfile": {
-            "vmSize": "[parameters('adVMSize')]"
-          },
-          "availabilitySet": {
-            "id": "[resourceId('Microsoft.Compute/availabilitySets',parameters('adAvailabilitySetName'))]"
-          },
-          "osProfile": {
-            "computerName": "[parameters('adPDCVMName')]",
-            "adminUsername": "[parameters('adminUsername')]",
-            "adminPassword": "[parameters('adminPassword')]"
-          },
-          "storageProfile": {
-            "imageReference": {
-              "publisher": "[parameters('adImagePublisher')]",
-              "offer": "[parameters('adImageOffer')]",
-              "sku": "[parameters('adImageSKU')]",
-              "version": "latest"
-            },
-            "osDisk": {
-              "name":  "[concat(parameters('adPDCVMName'),'_OSDisk')]",
-              "caching": "ReadWrite",
-              "createOption": "FromImage"
-            },
-            "dataDisks": [
-              {
-                "name": "[concat(parameters('adPDCVMName'),'-data-disk1')]",
-                "createOption": "Empty",
-                "caching": "None",
-                "diskSizeGB": 128,
-                "lun": 0
-              }
-            ]
-          },
-          "networkProfile": {
-            "networkInterfaces": [
-              {
-                "id": "[resourceId('Microsoft.Network/networkInterfaces',parameters('adPDCNicName'))]"
-              }
-            ]
-          },
-          "diagnosticsProfile": {
-            "bootDiagnostics": {
-              "enabled": true,
-              "storageUri": "[concat('http://',variables('diagstorageName'),'.blob.', environment().suffixes.storage)]"
-            }
-          }
-        },
-        "resources": [
-          {
-            "type": "Microsoft.Compute/virtualMachines/extensions",
-            "name": "[concat(parameters('adPDCVMName'),'/InstallDomainController')]",
-            "apiVersion": "2020-12-01",
-            "location": "[parameters('location')]",
-            "dependsOn": [
-              "[resourceId('Microsoft.Compute/virtualMachines', parameters('adPDCVMName'))]"
-            ],
-            "properties": {
-              "publisher": "Microsoft.Powershell",
-              "type": "DSC",
-              "typeHandlerVersion": "2.75",
-              "autoUpgradeMinorVersion": true,
-              "settings": {
-                "modulesURL": "[parameters('adPDCModulesURL')]",
-                "configurationFunction": "[parameters('adPDCConfigurationFunction')]",
-                "properties": {
-                  "domainName": "[parameters('domainName')]",
-                  "adminCreds": {
-                    "userName": "[parameters('adminUsername')]",
-                    "password": "PrivateSettingsRef:adminPassword"
-                  }
-                }
-              },
-              "protectedSettings": {
-                "items": {
-                  "adminPassword": "[parameters('adminPassword')]"
-                }
-              }
-            }
-          }
-        ]
-      },
-      {
-        "apiVersion": "2020-12-01",
-        "type": "Microsoft.Compute/virtualMachines",
-        "name": "[parameters('adBDCVMName')]",
-        "location": "[parameters('location')]",
-        "dependsOn": [
-          "[resourceId('Microsoft.Compute/availabilitySets/',parameters('adAvailabilitySetName'))]"
-        ],
-        "properties": {
-          "hardwareProfile": {
-            "vmSize": "[parameters('adVMSize')]"
-          },
-          "availabilitySet": {
-            "id": "[resourceId('Microsoft.Compute/availabilitySets',parameters('adAvailabilitySetName'))]"
-          },
-          "osProfile": {
-            "computerName": "[parameters('adBDCVMName')]",
-            "adminUsername": "[parameters('adminUsername')]",
-            "adminPassword": "[parameters('adminPassword')]"
-          },
-          "storageProfile": {
-            "imageReference": {
-              "publisher": "[parameters('adImagePublisher')]",
-              "offer": "[parameters('adImageOffer')]",
-              "sku": "[parameters('adImageSKU')]",
-              "version": "latest"
-            },
-            "osDisk": {
-              "name": "osdisk",
-              "caching": "ReadWrite",
-              "createOption": "FromImage"
-            },
-            "dataDisks": [
-              {
-                "name": "[concat(parameters('adBDCVMName'),'-data-disk1')]",
-                "createOption": "Empty",
-                "caching": "None",
-                "diskSizeGB": 128,
-                "lun": 0
-              }
-            ]
-          },
-          "networkProfile": {
-            "networkInterfaces": [
-              {
-                "id": "[resourceId('Microsoft.Network/networkInterfaces',parameters('adBDCNicName'))]"
-              }
-            ]
-          },
-          "diagnosticsProfile": {
-            "bootDiagnostics": {
-              "enabled": true,
-              "storageUri": "[concat('http://',variables('diagstorageName'),'.blob.', environment().suffixes.storage)]"
-            }
-          }
         }
       },
       {

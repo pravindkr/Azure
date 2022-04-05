@@ -8,19 +8,13 @@
     "sqlVMName": {
       "type": "string"
     },
-    "sqlSubnetRef": {
+    "subnet6Ref": {
       "type": "string"
     },
     "sqlBEAddressPoolID": {
       "type": "string"
     },
     "sqlwNicName": {
-      "type": "string"
-    },
-    "primaryDCIPAddressNameWithSuffix": {
-      "type": "string"
-    },
-    "backupDCIPAddressNameWithSuffix": {
       "type": "string"
     },
     "sql1AddressNameWithSuffix": {
@@ -43,7 +37,7 @@
             "properties": {
               "privateIPAllocationMethod": "Dynamic",
               "subnet": {
-                "id": "[parameters('sqlSubnetRef')]"
+                "id": "[parameters('subnet6Name')]"
               },
               "publicIpAddress": {
                 "id": "[resourceId('Microsoft.Network/publicIpAddresses', parameters('sql1AddressNameWithSuffix'))]"
@@ -70,7 +64,7 @@
             "properties": {
               "privateIPAllocationMethod": "Dynamic",
               "subnet": {
-                "id": "[parameters('sqlSubnetRef')]"
+                "id": "[parameters('subnet6Name')]"
               },
               "publicIpAddress": {
                 "id": "[resourceId('Microsoft.Network/publicIpAddresses', parameters('sql0AddressNameWithSuffix'))]"
@@ -97,7 +91,7 @@
             "properties": {
               "privateIPAllocationMethod": "Dynamic",
               "subnet": {
-                "id": "[parameters('sqlSubnetRef')]"
+                "id": "[parameters('subnet6Name')]"
               }
             }
           }
