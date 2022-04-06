@@ -17,12 +17,6 @@
     "sqlwNicName": {
       "type": "string"
     },
-    "sql1AddressNameWithSuffix": {
-      "type": "string"
-    },
-    "sql0AddressNameWithSuffix": {
-      "type": "string"
-    }
   },
   "resources": [
     {
@@ -38,9 +32,6 @@
               "privateIPAllocationMethod": "Dynamic",
               "subnet": {
                 "id": "[parameters('sqlSubnetRef')]"
-              },
-              "publicIpAddress": {
-                "id": "[resourceId('Microsoft.Network/publicIpAddresses', parameters('sql1AddressNameWithSuffix'))]"
               },
               "loadBalancerBackendAddressPools": [
                 {
@@ -65,9 +56,6 @@
               "privateIPAllocationMethod": "Dynamic",
               "subnet": {
                 "id": "[parameters('sqlSubnetRef')]"
-              },
-              "publicIpAddress": {
-                "id": "[resourceId('Microsoft.Network/publicIpAddresses', parameters('sql0AddressNameWithSuffix'))]"
               },
               "loadBalancerBackendAddressPools": [
                 {
