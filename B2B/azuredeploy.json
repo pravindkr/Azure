@@ -2326,6 +2326,9 @@
                     "sqlAvailabilitySetName": {
                         "value": "[variables('vmSettings').availabilitySets.sqlAvailabilitySetName]"
                     },
+					"sqlStorageAccountName": {
+						"value": "[parameters('sqlStorageAccountName')]"
+					},
                     "location": {
                         "value": "[parameters('location')]"
                     },
