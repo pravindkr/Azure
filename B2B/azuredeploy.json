@@ -1306,7 +1306,7 @@
 		  "apiVersion": "2020-10-01",
             "dependsOn": [
                 "[variables('virtualNetworkName')]",
-				"[variables('LoadBalancers')]"
+				"Microsoft.Resources/deployments/LoadBalancers"
             ],
 		  "properties": {
 			"mode": "Incremental",
