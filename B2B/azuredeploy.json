@@ -2312,10 +2312,9 @@
         {
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2020-10-01",
-            "name": "ProvisioningSQLVMs",
+            "name": "ProvisioningVMs",
             "dependsOn": [
-                "Microsoft.Resources/deployments/CreatingNetworkInterfaces",
-                "Microsoft.Resources/deployments/UpdatingDNStoPrimaryADVM"
+                "Microsoft.Resources/deployments/CreatingNetworkInterfaces"
             ],
             "properties": {
                 "mode": "Incremental",
