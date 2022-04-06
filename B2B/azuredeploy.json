@@ -225,7 +225,7 @@
 		  "metadata": {
 			"description": "The name of  DC Storage Account"
 		  },
-		  "defaultValue": "azptpldcstg"
+		  "defaultValue": "azaspldcstg"
 		},
 		"dcStorageAccountType": {
 		  "type": "string",
@@ -702,38 +702,42 @@
 		{
 		  "name": "[parameters('sqlStorageAccountName')]",
 		  "type": "Microsoft.Storage/storageAccounts",
-		  "apiVersion": "2021-01-01",
+		  "apiVersion": "2019-06-01",
 		  "location": "[parameters('location')]",
 		  "sku": {
 			"name": "[parameters('SqlStorageAccountType')]"
-		  }
+		  },
+		  "kind": "StorageV2"
 		},
 		{
 		  "type": "Microsoft.Storage/storageAccounts",
 		  "name": "[parameters('dcStorageAccountName')]",
-		  "apiVersion": "2021-01-01",
+		  "apiVersion": "2019-06-01",
 		  "location": "[parameters('location')]",
 		  "sku": {
 			"name": "[parameters('DcStorageAccountType')]"
-		  }
+		  },
+		  "kind": "StorageV2"
 		},
 		{
 		  "type": "Microsoft.Storage/storageAccounts",
 		  "name": "[concat(uniquestring(parameters('sqlStorageAccountName')), 'fsw')]",
-		  "apiVersion": "2021-01-01",
+		  "apiVersion": "2019-06-01",
 		  "location": "[parameters('location')]",
 		  "sku": {
 			"name": "Standard_LRS"
-		  }
+		  },
+		  "kind": "StorageV2"
 		},
 		{
 		  "type": "Microsoft.Storage/storageAccounts",
 		  "name": "[concat(uniquestring(parameters('sqlStorageAccountName')), 'diag')]",
-		  "apiVersion": "2021-01-01",
+		  "apiVersion": "2019-06-01",
 		  "location": "[parameters('location')]",
 		  "sku": {
 			"name": "Standard_LRS"
-		  }
+		  },
+		  "kind": "StorageV2"
 		},
         {
             "type": "Microsoft.Compute/availabilitySets",
