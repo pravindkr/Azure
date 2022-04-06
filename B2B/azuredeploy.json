@@ -174,13 +174,6 @@
                 "description": "Prefix to use for VM names"
             }	
         },
-		"SQLDatabaseNodeNamePrefix": {
-            "defaultValue": "Sql-Srv-",
-            "type": "String",
-            "metadata": {
-                "description": "Prefix to use for VM names"
-            }
-        },
 		"sqlVMSize": {
 		  "type": "string",
 		  "metadata": {
@@ -2381,7 +2374,7 @@
 					"value": "[variables('vmSettings').vmContainerName]"
 					},
                     "sqlVMName": {
-                        "value": "[parameters('SQLDatabaseNodeNamePrefix')]"
+                        "value": "[variables('vmSettings').sqlVMName]"
                     },
                     "sqlVMSize": {
                         "value": "[parameters('sqlVMSize')]"
