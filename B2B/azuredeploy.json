@@ -1275,8 +1275,8 @@
                     "sqlLBIPAddress": {
                         "value": "[parameters('sqlLBIPAddress')]"
                     },
-                    "subnet6Ref": {
-                        "value": "[variables('subnet6Name')]"
+                    "sqlSubnetRef": {
+                        "value": "[variables('subnet6Ref')]"
                     },
                     "sqlLBBE": {
                         "value": "[variables('lbSettings').sqlLBBE]"
