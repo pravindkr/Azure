@@ -47,7 +47,7 @@
             }
         },
         "vmSize": {
-            "defaultValue": "Standard_F2s_v2",
+            "defaultValue": "Standard_D2s_v3",
             "type": "String",
 			"allowedValues": [
 			    "Standard_F2s_v2",
@@ -57,6 +57,7 @@
                 "Standard_DS2",
                 "Standard_DS3",
 				"Standard D2s v3",
+				"Standard_D2s_v3",
                 "Standard_DS4",
                 "Standard_DS11",
                 "Standard_DS12",
@@ -412,7 +413,7 @@
             }
         },
         "sqlServerVersion": {
-            "defaultValue": "SQL2014SP2-WS2012R2",
+            "defaultValue": "sql2019-ws2022",
             "type": "String",
             "metadata": {
                 "description": "The Sql Server Version"
