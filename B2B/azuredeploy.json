@@ -181,6 +181,20 @@
                 "description": "Prefix to use for VM names"
             }
         },
+		"sqlVMSize": {
+		  "type": "string",
+		  "metadata": {
+			"description": "The size of the SQL VMs Created"
+		  },
+		  "defaultValue": "Standard_D4s_v3"
+		},
+		"witnessVMSize": {
+		  "type": "string",
+		  "metadata": {
+			"description": "The size of the Witness VM Created"
+		  },
+		  "defaultValue": "Standard_D2s_v3"
+		},
 		"sqlServerServiceAccountUserName": {
             "defaultValue": "sqlservice",
             "type": "String",
@@ -2298,9 +2312,10 @@
         {
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2020-10-01",
-            "name": "ProvisioningVMs",
+            "name": "ProvisioningSQLVMs",
             "dependsOn": [
-                "Microsoft.Resources/deployments/CreatingNetworkInterfaces"
+                "Microsoft.Resources/deployments/CreatingNetworkInterfaces",
+                "Microsoft.Resources/deployments/UpdatingDNStoPrimaryADVM"
             ],
             "properties": {
                 "mode": "Incremental",
