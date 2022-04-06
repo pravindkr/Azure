@@ -214,7 +214,7 @@
 			"metadata": {
 				"description": "The name of Sql Server Storage Account"
 			},
-			"defaultValue": "azasplsqlstg"
+			"defaultValue": "azptplsqlstg"
 		},
 		"sqlStorageAccountType": {
 		  "type": "string",
@@ -232,7 +232,7 @@
 		  "metadata": {
 			"description": "The name of  DC Storage Account"
 		  },
-		  "defaultValue": "azaspldcstg"
+		  "defaultValue": "azptpldcstg"
 		},
 		"dcStorageAccountType": {
 		  "type": "string",
@@ -2445,9 +2445,6 @@
                                     "subnet": {
                                         "id": "[variables('subnet6Ref')]"
                                     },
-                                    "publicIpAddress": {
-                                        "id": "[resourceId('Microsoft.Network/publicIpAddresses', variables('sql0AddressNameWithSuffix'))]"
-                                    },
                                     "loadBalancerBackendAddressPools": [
                                         {
                                             "id": "[variables('derivedIds').sqlBEAddressPoolID]"
@@ -2494,9 +2491,6 @@
                                     "privateIPAllocationMethod": "Dynamic",
                                     "subnet": {
                                         "id": "[variables('subnet6Ref')]"
-                                    },
-                                    "publicIpAddress": {
-                                        "id": "[resourceId('Microsoft.Network/publicIpAddresses', variables('sql1AddressNameWithSuffix'))]"
                                     },
                                     "loadBalancerBackendAddressPools": [
                                         {
