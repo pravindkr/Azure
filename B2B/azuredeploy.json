@@ -1256,6 +1256,9 @@
             "apiVersion": "2020-10-01",
 			"comments": "Create Load Balancers for SQL",
             "name": "LoadBalancers",
+            "dependsOn": [
+                "[variables('virtualNetworkName')]"
+            ],
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
