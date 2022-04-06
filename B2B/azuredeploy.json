@@ -2341,6 +2341,9 @@
                     "domainName": {
                         "value": "[parameters('domainName')]"
                     },
+					"vmContainerName": {
+					"value": "[variables('vmSettings').vmContainerName]"
+					},
                     "sqlVMName": {
                         "value": "[parameters('SQLDatabaseNodeNamePrefix')]"
                     },
