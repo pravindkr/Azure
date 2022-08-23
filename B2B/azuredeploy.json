@@ -2247,60 +2247,14 @@
                 }
             }
         },
-		
-		{
-            "type": "Microsoft.Resources/deployments",
-            "apiVersion": "2020-10-01",
-            "name": "UpdatingDNStoBDCNIC",
-            "dependsOn": [
-                "[resourceId('Microsoft.Compute/virtualMachines/extensions', variables('vmName')[0], 'InstallDomainController')]",
-				"UpdatingDNStoPrimaryADVM"
-            ],
-				"properties": {
-					"mode": "Incremental",
-					"templateLink": {
-					  "uri": "[variables('nicTemplateUri')]",
-					  "contentVersion": "1.0.0.0"
-					},					
-				"parameters": {
-				  "networkInterface9Name": {
-					"value": "[variables('networkInterface9Name')[1]]"
-				  },
-				"ipConfigurations": {
-					"value": [
-					  {
-						"name": "ipconfig1",
-						"properties": {
-						  "privateIPAllocationMethod": "Static",
-						  "privateIPAddress": "[variables('ipAddress')[1]]",
-						  "subnet": {
-							"id": "[variables('subnet5Ref')]"
-						  }
-						}
-					  }
-					]
-				  },
-				"dnsServers": {
-					"value": [
-					  "[variables('ipAddress')[0]]"
-					]
-				  },
-				"location": {
-					"value": "[parameters('location')]"
-					}
-				}
-		    }
-		},
-		
-		
-		
+						
         {
             "type": "Microsoft.Compute/virtualMachines/extensions",
-            "apiVersion": "2020-12-01",
+            "apiVersion": "2021-07-01",
             "name": "[concat(variables('vmName')[1],'/CreateBDC')]",
             "location": "[parameters('location')]",
             "dependsOn": [
-                "UpdatingDNStoBDCNIC"
+                "UpdatingDNStoPrimaryADVM"
             ],
             "properties": {
                 "publisher": "Microsoft.Powershell",
@@ -2330,8 +2284,7 @@
             "apiVersion": "2020-10-01",
             "name": "UpdatingDNSwithBackupADVM",
             "dependsOn": [
-                "[resourceId('Microsoft.Compute/virtualMachines/extensions', variables('vmName')[1], 'CreateBDC')]",
-				"UpdatingDNStoBDCNIC"
+                "[resourceId('Microsoft.Compute/virtualMachines/extensions', variables('vmName')[1], 'CreateBDC')]"
             ],
             "properties": {
                 "mode": "Incremental",
@@ -2733,8 +2686,7 @@
 		 "type": "Microsoft.Compute/virtualMachines/extensions",
 		 "name": "[concat(trim(variables('vmListArray')[copyIndex()]),'/join domain')]",
 		 "dependsOn": [
-					"[resourceId('Microsoft.Compute/virtualMachines/extensions', variables('vmName')[0], 'InstallDomainController')]",
-					"UpdatingDNStoPrimaryADVM"
+					"UpdatingDNSwithBackupADVM"
 					],
 		"location": "[parameters('location')]",
 		"copy": {
