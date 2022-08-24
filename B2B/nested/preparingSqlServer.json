@@ -107,11 +107,10 @@
           }
         },
 		"protectedSettings": {
-					"items": {
-                        "adminPassword": "[parameters('adminPassword')]",
-						"configurationUrlSasToken": "[parameters('_artifactsLocationSasToken')]"
-							}
-				}
+			"items": {
+				"adminPassword": "[parameters('adminPassword')]"
+			}
+		}
       }
     },
     {
@@ -189,7 +188,6 @@
         "settings": {
           "modulesURL": "[parameters('sqlAOPrepareModulesURL')]",
           "configurationFunction": "[parameters('sqlAOPrepareConfigurationFunction')]",
-		  "script": "PrepareAlwaysOnSqlServer.ps1",
           "properties": {
             "domainName": "[parameters('domainName')]",
             "sqlAlwaysOnEndpointName": "[parameters('sqlAOEPName')]",
@@ -208,8 +206,7 @@
         "protectedSettings": {
           "items": {
             "adminPassword": "[parameters('adminPassword')]",
-            "sqlServerServiceAccountPassword": "[parameters('sqlServerServiceAccountPassword')]",
-			"configurationUrlSasToken": "[parameters('_artifactsLocationSasToken')]"
+            "sqlServerServiceAccountPassword": "[parameters('sqlServerServiceAccountPassword')]"
           }
         }
       }
