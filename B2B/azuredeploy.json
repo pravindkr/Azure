@@ -108,7 +108,7 @@
             "metadata": {
                 "description": "Admin password"
             },
-			"defaultValue": "Demo@1234567890"
+			"defaultValue": "ProNj3b&T2vI2Aq#$"
         },
 		"domainName": {
             "type": "string",
@@ -169,7 +169,7 @@
 		4,
 		5
             ],
-            "defaultValue": 2
+            "defaultValue": 1
         },
 		"HyworksControllerNodeNamePrefix": {
             "defaultValue": "HyWorks-Ctrl-",
@@ -204,7 +204,7 @@
             "metadata": {
                 "description": "The SQL Server Service Account password"
             },
-			"defaultValue": "Demo@1234567890"
+			"defaultValue": "Pro@123Aspl23*#"
         },
 		"sqlStorageAccountName": {
 			"type": "string",
@@ -2196,8 +2196,11 @@
                 "typeHandlerVersion": "2.75",
                 "autoUpgradeMinorVersion": true,
                 "settings": {
+					"configuration": {
                     "modulesURL": "[variables('configuration').adPDCModulesURL]",
                     "configurationFunction": "[variables('configuration').adPDCConfigurationFunction]",
+					"script": "CreateADPDC.ps1"
+					}
                     "properties": {
                         "domainName": "[parameters('domainName')]",
                         "adminCreds": {
@@ -2206,11 +2209,12 @@
                         }
                     }
                 },
-                "protectedSettings": {
-                    "items": {
-                        "adminPassword": "[parameters('adminPassword')]"
-                    }
-                }
+				"protectedSettings": {
+					"items": {
+                        "adminPassword": "[parameters('adminPassword')]",
+						"configurationUrlSasToken": "[parameters('_artifactsLocationSasToken')]"
+							}
+				}
             }
         },
         {
@@ -2254,7 +2258,7 @@
             "name": "[concat(variables('vmName')[1],'/CreateBDC')]",
             "location": "[parameters('location')]",
             "dependsOn": [
-                "UpdatingDNStoPrimaryADVM"
+                "Microsoft.Resources/deployments/UpdatingDNStoPrimaryADVM"
             ],
             "properties": {
                 "publisher": "Microsoft.Powershell",
@@ -2262,22 +2266,26 @@
                 "typeHandlerVersion": "2.75",
                 "autoUpgradeMinorVersion": true,
                 "settings": {
+					"configuration": {
                     "modulesURL": "[variables('configuration').adBDCModulesURL]",
                     "configurationFunction": "[variables('configuration').adBDCConfigurationFunction]",
-                    "properties": {
+					"script": "CreateADBDC.ps1"
+					},
+					"properties": {
                         "domainName": "[parameters('domainName')]",
                         "adminCreds": {
                             "userName": "[parameters('adminUsername')]",
                             "password": "PrivateSettingsRef:adminPassword"
-                        }
-                    }
-                },
-                "protectedSettings": {
-                    "items": {
-                        "adminPassword": "[parameters('adminPassword')]"
-                    }
-                }
-            }
+							}
+						}
+				    },
+				"protectedSettings": {
+					"items": {
+                        "adminPassword": "[parameters('adminPassword')]",
+						"configurationUrlSasToken": "[parameters('_artifactsLocationSasToken')]"
+							}
+						}
+				}		
         },
         {
             "type": "Microsoft.Resources/deployments",
@@ -2682,9 +2690,9 @@
         },
 		{
 		 "comments": "Join domain - JsonADDomainExtension",
-		 "apiVersion": "2015-06-15",
+		 "apiVersion": "2021-03-01",
 		 "type": "Microsoft.Compute/virtualMachines/extensions",
-		 "name": "[concat(trim(variables('vmListArray')[copyIndex()]),'/join domain')]",
+		 "name": "[concat(trim(variables('vmListArray')[copyIndex()]),'joindomain')]",
 		 "dependsOn": [
 					"UpdatingDNSwithBackupADVM"
 					],
@@ -2705,9 +2713,12 @@
 					  "Options": "[variables('domainJoinOptions')]"
 					 /* "OUPath": "[parameters('ouPath')]"*/
 					},
-					"protectedSettings": {
-					  "Password": "[parameters('adminPassword')]"
-					}
+		"protectedSettings": {
+					"items": {
+                        "Password": "[parameters('adminPassword')]",
+						"configurationUrlSasToken": "[parameters('_artifactsLocationSasToken')]"
+							}
+						}
 				}
 		}
     ],
