@@ -80,6 +80,7 @@
         "settings": {
           "modulesURL": "[parameters('createClusterModulesURL')]",
           "configurationFunction": "[parameters('createClusterConfigurationFunction')]",
+		  "script": "CreateFailoverCluster.ps1",
           "properties": {
             "domainName": "[parameters('domainName')]",
             "clusterName": "[parameters('clusterName')]",
@@ -118,7 +119,8 @@
           "items": {
             "adminPassword": "[parameters('adminPassword')]",
             "sqlServerServiceAccountPassword": "[parameters('sqlServerServiceAccountPassword')]",
-            "sqlAuthPassword": "[parameters('sqlServerServiceAccountPassword')]"
+            "sqlAuthPassword": "[parameters('sqlServerServiceAccountPassword')]",
+			"configurationUrlSasToken": "[parameters('_artifactsLocationSasToken')]"
           }
         }
       }

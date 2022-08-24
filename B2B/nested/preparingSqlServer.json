@@ -97,6 +97,7 @@
         "settings": {
           "modulesURL": "[parameters('fswModulesURL')]",
           "configurationFunction": "[parameters('fswConfigurationFunction')]",
+		  "script": "CreateFileShareWitness.ps1",
           "properties": {
             "domainName": "[parameters('domainName')]",
             "SharePath": "[parameters('sharePath')]",
@@ -106,11 +107,12 @@
             }
           }
         },
-        "protectedSettings": {
-          "items": {
-            "adminPassword": "[parameters('adminPassword')]"
-          }
-        }
+		"protectedSettings": {
+					"items": {
+                        "adminPassword": "[parameters('adminPassword')]",
+						"configurationUrlSasToken": "[parameters('_artifactsLocationSasToken')]"
+							}
+				}
       }
     },
     {
@@ -188,6 +190,7 @@
         "settings": {
           "modulesURL": "[parameters('sqlAOPrepareModulesURL')]",
           "configurationFunction": "[parameters('sqlAOPrepareConfigurationFunction')]",
+		  "script": "PrepareAlwaysOnSqlServer.ps1",
           "properties": {
             "domainName": "[parameters('domainName')]",
             "sqlAlwaysOnEndpointName": "[parameters('sqlAOEPName')]",
@@ -206,7 +209,8 @@
         "protectedSettings": {
           "items": {
             "adminPassword": "[parameters('adminPassword')]",
-            "sqlServerServiceAccountPassword": "[parameters('sqlServerServiceAccountPassword')]"
+            "sqlServerServiceAccountPassword": "[parameters('sqlServerServiceAccountPassword')]",
+			"configurationUrlSasToken": "[parameters('_artifactsLocationSasToken')]"
           }
         }
       }
