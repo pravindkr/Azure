@@ -204,7 +204,7 @@
             "metadata": {
                 "description": "The SQL Server Service Account password"
             },
-			"defaultValue": "Pro@123Aspl23*#"
+			"defaultValue": "Pro@123Aspl#"
         },
 		"sqlStorageAccountName": {
 			"type": "string",
@@ -416,7 +416,7 @@
             }
         },
         "sqlServerVersion": {
-            "defaultValue": "sql2019-ws2019",
+            "defaultValue": "sql2019-ws2022",
             "type": "String",
             "metadata": {
                 "description": "The Sql Server Version"
@@ -2199,7 +2199,7 @@
 					"configuration": {
                     "modulesURL": "[variables('configuration').adPDCModulesURL]",
                     "configurationFunction": "[variables('configuration').adPDCConfigurationFunction]",
-					"script": "CreateADPDC.ps1"
+					"script": "CreateADPDC.ps1",
 					},
                     "properties": {
                         "domainName": "[parameters('domainName')]",
@@ -2269,7 +2269,7 @@
 					"configuration": {
                     "modulesURL": "[variables('configuration').adBDCModulesURL]",
                     "configurationFunction": "[variables('configuration').adBDCConfigurationFunction]",
-					"script": "CreateADBDC.ps1"
+					"script": "CreateADBDC.ps1",
 					},
 					"properties": {
                         "domainName": "[parameters('domainName')]",
