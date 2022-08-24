@@ -108,7 +108,7 @@
             "metadata": {
                 "description": "Admin password"
             },
-			"defaultValue": "ProNj3b&T2vI2Aq#$"
+			"defaultValue": "Demo@1234567890"
         },
 		"domainName": {
             "type": "string",
@@ -183,7 +183,7 @@
 		  "metadata": {
 			"description": "The size of the SQL VMs Created"
 		  },
-		  "defaultValue": "Standard_D2s_v3"
+		  "defaultValue": "Standard_D4s_v3"
 		},
 		"witnessVMSize": {
 		  "type": "string",
@@ -204,7 +204,7 @@
             "metadata": {
                 "description": "The SQL Server Service Account password"
             },
-			"defaultValue": "Pro@123Aspl#"
+			"defaultValue": "Demo@1234567890"
         },
 		"sqlStorageAccountName": {
 			"type": "string",
