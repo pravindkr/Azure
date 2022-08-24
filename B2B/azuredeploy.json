@@ -87,7 +87,7 @@
 				9,
 				10
             		     ],
-            "defaultValue": 2
+            "defaultValue": 1
         },
         "HysecureManagementNodeNamePrefix": {
             "defaultValue": "HySecure-Mgmt-Node-",
@@ -183,7 +183,7 @@
 		  "metadata": {
 			"description": "The size of the SQL VMs Created"
 		  },
-		  "defaultValue": "Standard_D4s_v3"
+		  "defaultValue": "Standard_B4ms"
 		},
 		"witnessVMSize": {
 		  "type": "string",
@@ -416,7 +416,7 @@
             }
         },
         "sqlServerVersion": {
-            "defaultValue": "sql2019-ws2022",
+            "defaultValue": "sql2019-ws2019",
             "type": "String",
             "metadata": {
                 "description": "The Sql Server Version"
@@ -456,7 +456,7 @@
         },
 		"vmList": {
 		  "type": "string",
-		  "minLength": 1,
+		  "minLength": 3,
 		  "metadata": {
 			"description": "List of virtual machines to be domain joined, if using multiple VMs, make their names comma separate. E.g. VM01, VM02, VM03."
 		  }
@@ -2200,7 +2200,7 @@
                     "modulesURL": "[variables('configuration').adPDCModulesURL]",
                     "configurationFunction": "[variables('configuration').adPDCConfigurationFunction]",
 					"script": "CreateADPDC.ps1"
-					}
+					},
                     "properties": {
                         "domainName": "[parameters('domainName')]",
                         "adminCreds": {
@@ -2692,7 +2692,7 @@
 		 "comments": "Join domain - JsonADDomainExtension",
 		 "apiVersion": "2021-03-01",
 		 "type": "Microsoft.Compute/virtualMachines/extensions",
-		 "name": "[concat(trim(variables('vmListArray')[copyIndex()]),'joindomain')]",
+		 "name": "[concat(trim(variables('vmListArray')[copyIndex()]),'/joindomain')]",
 		 "dependsOn": [
 					"UpdatingDNSwithBackupADVM"
 					],
