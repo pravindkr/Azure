@@ -2251,7 +2251,7 @@
 						
         {
             "type": "Microsoft.Compute/virtualMachines/extensions",
-            "apiVersion": "2021-07-01",
+            "apiVersion": "2020-12-01",
             "name": "[concat(variables('vmName')[1],'/CreateBDC')]",
             "location": "[parameters('location')]",
             "dependsOn": [
@@ -2263,9 +2263,11 @@
                 "typeHandlerVersion": "2.75",
                 "autoUpgradeMinorVersion": true,
                 "settings": {
-                    "modulesURL": "[variables('configuration').adBDCModulesURL]",
-                    "configurationFunction": "[variables('configuration').adBDCConfigurationFunction]",
-					"script": "CreateADBDC.ps1",
+					"configuration": {
+						"modulesURL": "[variables('configuration').adBDCModulesURL]",
+						"configurationFunction": "[variables('configuration').adBDCConfigurationFunction]",
+						"script": "CreateADBDC.ps1"
+					},
 					"properties": {
                         "domainName": "[parameters('domainName')]",
                         "adminCreds": {
@@ -2276,7 +2278,8 @@
 				    },
 				"protectedSettings": {
 					"items": {
-                        "adminPassword": "[parameters('adminPassword')]"
+                        "adminPassword": "[parameters('adminPassword')]",
+						"configurationUrlSasToken": "[parameters('_artifactsLocationSasToken')]"
 							}
 						}
 				}		
