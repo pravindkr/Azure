@@ -2196,9 +2196,11 @@
                 "typeHandlerVersion": "2.75",
                 "autoUpgradeMinorVersion": true,
                 "settings": {
-                    "modulesURL": "[variables('configuration').adPDCModulesURL]",
-                    "configurationFunction": "[variables('configuration').adPDCConfigurationFunction]",
-					"script": "CreateADPDC.ps1",
+					"configuration": {
+						"modulesURL": "[variables('configuration').adPDCModulesURL]",
+						"configurationFunction": "[variables('configuration').adPDCConfigurationFunction]",
+						"script": "CreateADPDC.ps1"
+					},
                     "properties": {
                         "domainName": "[parameters('domainName')]",
                         "adminCreds": {
@@ -2209,7 +2211,8 @@
                 },
 				"protectedSettings": {
 					"items": {
-                        "adminPassword": "[parameters('adminPassword')]"
+                        "adminPassword": "[parameters('adminPassword')]",
+						"configurationUrlSasToken": "[parameters('_artifactsLocationSasToken')]"
 							}
 				}
             }
