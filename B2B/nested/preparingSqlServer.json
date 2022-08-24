@@ -97,7 +97,7 @@
         "settings": {
           "modulesURL": "[parameters('fswModulesURL')]",
           "configurationFunction": "[parameters('fswConfigurationFunction')]",
-		  "script": "CreateFileShareWitness.ps1",
+		  "script": "CreateFileShareWitness.ps1"
           "properties": {
             "domainName": "[parameters('domainName')]",
             "SharePath": "[parameters('sharePath')]",
@@ -190,7 +190,7 @@
         "settings": {
           "modulesURL": "[parameters('sqlAOPrepareModulesURL')]",
           "configurationFunction": "[parameters('sqlAOPrepareConfigurationFunction')]",
-		  "script": "PrepareAlwaysOnSqlServer.ps1",
+		  "script": "PrepareAlwaysOnSqlServer.ps1"
           "properties": {
             "domainName": "[parameters('domainName')]",
             "sqlAlwaysOnEndpointName": "[parameters('sqlAOEPName')]",

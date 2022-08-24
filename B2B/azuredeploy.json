@@ -2199,7 +2199,7 @@
 					"configuration": {
                     "modulesURL": "[variables('configuration').adPDCModulesURL]",
                     "configurationFunction": "[variables('configuration').adPDCConfigurationFunction]",
-					"script": "CreateADPDC.ps1",
+					"script": "CreateADPDC.ps1"
 					},
                     "properties": {
                         "domainName": "[parameters('domainName')]",
@@ -2269,7 +2269,7 @@
 					"configuration": {
                     "modulesURL": "[variables('configuration').adBDCModulesURL]",
                     "configurationFunction": "[variables('configuration').adBDCConfigurationFunction]",
-					"script": "CreateADBDC.ps1",
+					"script": "CreateADBDC.ps1"
 					},
 					"properties": {
                         "domainName": "[parameters('domainName')]",
