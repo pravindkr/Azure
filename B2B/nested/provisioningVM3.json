@@ -172,21 +172,21 @@
               "name": "[concat(parameters('sqlVMName'), copyindex(),'-data-disk1')]",
               "caching": "None",
               "createOption": "Empty",
-              "diskSizeGB": 1000,
+              "diskSizeGB": 100,
               "lun": 0
             },
             { 
               "name": "[concat(parameters('sqlVMName'), copyindex(),'-data-disk2')]",
               "caching": "None",
               "createOption": "Empty",
-              "diskSizeGB": 1000,
+              "diskSizeGB": 100,
               "lun": 1
             },
             { 
               "name": "[concat(parameters('sqlVMName'), copyindex(),'-data-disk3')]",
               "caching": "None",
               "createOption": "Empty",
-              "diskSizeGB": 1000,
+              "diskSizeGB": 100,
               "lun": 2
             }
           ]

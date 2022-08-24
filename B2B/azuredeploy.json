@@ -183,7 +183,7 @@
 		  "metadata": {
 			"description": "The size of the SQL VMs Created"
 		  },
-		  "defaultValue": "Standard_B4ms"
+		  "defaultValue": "Standard_D2s_v3"
 		},
 		"witnessVMSize": {
 		  "type": "string",
@@ -416,14 +416,14 @@
             }
         },
         "sqlServerVersion": {
-            "defaultValue": "sql2019-ws2022",
+            "defaultValue": "sql2019-ws2019",
             "type": "String",
             "metadata": {
                 "description": "The Sql Server Version"
             }
         },
         "numberOfSqlVMDisks": {
-            "defaultValue": "1",
+            "defaultValue": "2",
             "allowedValues": [
                 "1",
                 "2",
@@ -678,7 +678,7 @@
         "numberOfHySecureMgmtInstances": 1,
 	"numberOfHyWorksControllerInstances": 1,
 	"numberOfADDSInstances": 2,
-	"numberOfSQLInstances": 1,
+	"numberOfSQLInstances": 2,
 	"numberOfARSMasterInstances": 1,
 	"numberOfARSDataInstances": 1,
 	"numberOfGoldInstances": 1,
@@ -2168,7 +2168,10 @@
 						{
 						"diskSizeGB": 32,
 						"lun": 0,
-						"createOption": "Empty"
+						"createOption": "Empty",
+						"managedDisk": {
+                            "storageAccountType": "Standard_LRS"
+                        },
 						}
 					]
 				},
