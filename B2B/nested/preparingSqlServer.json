@@ -97,7 +97,6 @@
         "settings": {
           "modulesURL": "[parameters('fswModulesURL')]",
           "configurationFunction": "[parameters('fswConfigurationFunction')]",
-		  "script": "CreateFileShareWitness.ps1",
           "properties": {
             "domainName": "[parameters('domainName')]",
             "SharePath": "[parameters('sharePath')]",
