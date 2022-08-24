@@ -2246,14 +2246,58 @@
                 }
             }
         },
-						
+		
+		{
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2020-10-01",
+            "name": "UpdatingDNStoBDCNIC",
+            "dependsOn": [
+                "[resourceId('Microsoft.Compute/virtualMachines/extensions', variables('vmName')[0], 'InstallDomainController')]"
+            ],
+				"properties": {
+					"mode": "Incremental",
+					"templateLink": {
+					  "uri": "[variables('configuration').nicTemplateURL]",
+					  "contentVersion": "1.0.0.0"
+					},					
+				"parameters": {
+				  "networkInterface9Name": {
+					"value": "[variables('networkInterface9Name')[1]]"
+				  },
+				"ipConfigurations": {
+					"value": [
+					  {
+						"name": "ipconfig1",
+						"properties": {
+						  "privateIPAllocationMethod": "Static",
+						  "privateIPAddress": "[variables('ipAddress')[1]]",
+						  "subnet": {
+							"id": "[variables('subnet5Ref')]"
+						  }
+						}
+					  }
+					]
+				  },
+				"dnsServers": {
+					"value": [
+					  "[variables('ipAddress')[0]]"
+					]
+				  },
+				"location": {
+					"value": "[parameters('location')]"
+					}
+				}
+		    }
+		},
+		
         {
             "type": "Microsoft.Compute/virtualMachines/extensions",
             "apiVersion": "2022-03-01",
             "name": "[concat(variables('vmName')[1],'/CreateBDC')]",
             "location": "[parameters('location')]",
             "dependsOn": [
-                "Microsoft.Resources/deployments/UpdatingDNStoPrimaryADVM"
+                "Microsoft.Resources/deployments/UpdatingDNStoPrimaryADVM",
+				"Microsoft.Resources/deployments/UpdatingDNStoBDCNIC"
             ],
             "properties": {
                 "publisher": "Microsoft.Powershell",
