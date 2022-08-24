@@ -2168,10 +2168,7 @@
 						{
 						"diskSizeGB": 32,
 						"lun": 0,
-						"createOption": "Empty",
-						"managedDisk": {
-                            "storageAccountType": "Standard_LRS"
-                        }
+						"createOption": "Empty"
 						}
 					]
 				},
@@ -2199,10 +2196,9 @@
                 "typeHandlerVersion": "2.75",
                 "autoUpgradeMinorVersion": true,
                 "settings": {
-					"configuration": {
                     "modulesURL": "[variables('configuration').adPDCModulesURL]",
-                    "configurationFunction": "[variables('configuration').adPDCConfigurationFunction]"
-					},
+                    "configurationFunction": "[variables('configuration').adPDCConfigurationFunction]",
+					"script": "CreateADPDC.ps1",
                     "properties": {
                         "domainName": "[parameters('domainName')]",
                         "adminCreds": {
@@ -2268,10 +2264,9 @@
                 "typeHandlerVersion": "2.75",
                 "autoUpgradeMinorVersion": true,
                 "settings": {
-					"configuration": {
                     "modulesURL": "[variables('configuration').adBDCModulesURL]",
-                    "configurationFunction": "[variables('configuration').adBDCConfigurationFunction]"
-					},
+                    "configurationFunction": "[variables('configuration').adBDCConfigurationFunction]",
+					"script": "CreateADBDC.ps1",
 					"properties": {
                         "domainName": "[parameters('domainName')]",
                         "adminCreds": {
