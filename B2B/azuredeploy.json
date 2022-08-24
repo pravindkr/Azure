@@ -2201,8 +2201,7 @@
                 "settings": {
 					"configuration": {
                     "modulesURL": "[variables('configuration').adPDCModulesURL]",
-                    "configurationFunction": "[variables('configuration').adPDCConfigurationFunction]",
-					"script": "CreateADPDC.ps1"
+                    "configurationFunction": "[variables('configuration').adPDCConfigurationFunction]"
 					},
                     "properties": {
                         "domainName": "[parameters('domainName')]",
@@ -2271,8 +2270,7 @@
                 "settings": {
 					"configuration": {
                     "modulesURL": "[variables('configuration').adBDCModulesURL]",
-                    "configurationFunction": "[variables('configuration').adBDCConfigurationFunction]",
-					"script": "CreateADBDC.ps1"
+                    "configurationFunction": "[variables('configuration').adBDCConfigurationFunction]"
 					},
 					"properties": {
                         "domainName": "[parameters('domainName')]",
@@ -2691,6 +2689,7 @@
                 }
             }
         },
+		/*
 		{
 		 "comments": "Join domain - JsonADDomainExtension",
 		 "apiVersion": "2021-03-01",
@@ -2723,7 +2722,7 @@
 							}
 						}
 				}
-		}
+		}*/
     ],
     "outputs": {}
 }
