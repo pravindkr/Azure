@@ -108,6 +108,9 @@
             "osDisk": {
               "name": "[concat(parameters('sqlVMName'), copyindex(),'_OSDisk')]",
               "caching": "ReadWrite",
+			  "managedDisk": {
+                    "storageAccountType": "Standard_LRS"
+                    },
               "createOption": "FromImage"
             },
             "dataDisks": [
@@ -115,14 +118,20 @@
                 "name": "[concat(parameters('sqlVMName'), copyindex(),'-data-disk1')]",
                 "caching": "None",
                 "createOption": "Empty",
-                "diskSizeGB": 100,
+                "diskSizeGB": 32,
+				"managedDisk": {
+                    "storageAccountType": "Standard_LRS"
+                    },
                 "lun": 0
               },
               {
                 "name": "[concat(parameters('sqlVMName'), copyindex(),'-data-disk2')]",
                 "caching": "None",
                 "createOption": "Empty",
-                "diskSizeGB": 100,
+                "diskSizeGB": 32,
+				"managedDisk": {
+                    "storageAccountType": "Standard_LRS"
+                    },
                 "lun": 1
               }
             ]
@@ -172,6 +181,9 @@
             "osDisk": {
               "name": "[concat(parameters('sqlwVMName'),'_OSDisk1')]",
               "caching": "ReadWrite",
+			  "managedDisk": {
+                    "storageAccountType": "Standard_LRS"
+                    },
               "createOption": "FromImage"
             },
             "dataDisks": [
@@ -179,7 +191,10 @@
                 "name": "[concat(parameters('sqlwVMName'),'-data-disk1')]",
                 "caching": "None",
                 "createOption": "Empty",
-                "diskSizeGB": 128,
+                "diskSizeGB": 32,
+				"managedDisk": {
+                    "storageAccountType": "Standard_LRS"
+                    },
                 "lun": 0
               }
             ]
