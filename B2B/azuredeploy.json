@@ -1,5 +1,5 @@
 {
-    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {	
 		"projectName": {
@@ -47,7 +47,7 @@
             }
         },
         "vmSize": {
-            "defaultValue": "Standard_B2s",
+            "defaultValue": "Standard_D2s_v3",
             "type": "String",
 			"allowedValues": [
 			    "Standard_B2s",
@@ -137,7 +137,7 @@
             }
         },
 		"vmSizeOfBroker": {
-            "defaultValue": "Standard_F4s_v2",
+            "defaultValue": "Standard_B2s",
             "type": "String",
 			"allowedValues": [
 		"Standard_B2s",
@@ -190,7 +190,7 @@
 		  "metadata": {
 			"description": "The size of the Witness VM Created"
 		  },
-		  "defaultValue": "Standard_D4s_v3"
+		  "defaultValue": "Standard_D2s_v3"
 		},
 		"sqlServerServiceAccountUserName": {
             "defaultValue": "sqlservice",
@@ -353,7 +353,7 @@
         },
 		"virtualMachineSize": {
             "type": "string",
-            "defaultValue": "Standard_B2s",
+            "defaultValue": "Standard_D2s_v3",
             "metadata": {
              "description": "Size of the Gold Virtual Machine"
             }
@@ -416,7 +416,7 @@
             }
         },
         "sqlServerVersion": {
-            "defaultValue": "sql2019-ws2019",
+            "defaultValue": "sql2019-ws2022",
             "type": "String",
             "metadata": {
                 "description": "The Sql Server Version"
@@ -590,7 +590,7 @@
 		"sqlwVMName": "cluster-fsw",
 		"windowsImagePublisher": "MicrosoftWindowsServer",
 		"windowsImageOffer": "WindowsServer",
-		"windowsImageSKU": "2022-Datacenter",
+		"windowsImageSKU": "2022-datacenter-smalldisk-g2",
 		"sqlImagePublisher": "MicrosoftSQLServer",
 		"sqlImageOffer": "[parameters('sqlServerVersion')]",
 		"rdpPort": 3389,
@@ -2727,15 +2727,15 @@
                     }
                 }
             }
-        }
-		/*
+        },
+		
 		{
 		 "comments": "Join domain - JsonADDomainExtension",
 		 "apiVersion": "2021-03-01",
 		 "type": "Microsoft.Compute/virtualMachines/extensions",
 		 "name": "[concat(trim(variables('vmListArray')[copyIndex()]),'/joindomain')]",
 		 "dependsOn": [
-					"UpdatingDNSwithBackupADVM"
+					"Microsoft.Resources/deployments/UpdatingDNSwithBackupADVM"
 					],
 		"location": "[parameters('location')]",
 		"copy": {
@@ -2752,7 +2752,7 @@
 					  "User": "[parameters('adminUsername')]",
 					  "Restart": "true",
 					  "Options": "[variables('domainJoinOptions')]"
-					  "OUPath": "[parameters('ouPath')]"
+					  /*"OUPath": "[parameters('ouPath')]"*/
 								},
 					"protectedSettings": {
 						"items": {
@@ -2760,7 +2760,7 @@
 							}
 						}
 				}
-		}*/
+		}
     ],
     "outputs": {}
 }
