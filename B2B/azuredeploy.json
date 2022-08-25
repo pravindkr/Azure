@@ -137,7 +137,7 @@
             }
         },
 		"vmSizeOfBroker": {
-            "defaultValue": "Standard_B2s",
+            "defaultValue": "Standard_F4s_v2",
             "type": "String",
 			"allowedValues": [
 		"Standard_B2s",
@@ -183,14 +183,14 @@
 		  "metadata": {
 			"description": "The size of the SQL VMs Created"
 		  },
-		  "defaultValue": "Standard_D4s_v3"
+		  "defaultValue": "Standard_D8s_v3"
 		},
 		"witnessVMSize": {
 		  "type": "string",
 		  "metadata": {
 			"description": "The size of the Witness VM Created"
 		  },
-		  "defaultValue": "Standard_D2s_v3"
+		  "defaultValue": "Standard_D4s_v3"
 		},
 		"sqlServerServiceAccountUserName": {
             "defaultValue": "sqlservice",
@@ -600,11 +600,9 @@
 	"sqlAOEPName": "[concat(parameters('deploymentPrefix'),'-hadr')]",
 	"sharePath": "[concat(parameters('deploymentPrefix'),'-fsw')]",
 	"clusterName": "[concat(parameters('deploymentPrefix'),'-fc')]",
-	"adPDCNicName": "ADPDCNic",
-	"adBDCNicName": "ADBDCNic",
 	"sqlwNicName": "[concat(variables('vmSettings').sqlwVMName,'-nic')]",		
 	"loadBalancer4Name": "SQLIntlb",
-        "networkInterface1Name": "HSWebNic",
+    "networkInterface1Name": "HSWebNic",
 	"networkInterface2Name": "HSMgmtNic",
 	"networkInterface3Name": "HWBrokerNic",
 	"networkInterface4Name": "HWControlNic",
@@ -680,7 +678,7 @@
 	"numberOfGoldInstances": 1,
 	"numberOfInstances" : 2,
 	"domainJoinOptions": 3,
-        "vmListArray": "[split(parameters('vmList'),',')]",
+    "vmListArray": "[split(parameters('vmList'),',')]",
 	"configuration": {
             "vnetwithDNSTemplateURL": "[uri(parameters('_artifactsLocation'), concat('nested/vnet-with-dns-server.json', parameters('_artifactsLocationSasToken')))]",
             "nicTemplateURL": "[uri(parameters('_artifactsLocation'), concat('nested/nic.json', parameters('_artifactsLocationSasToken')))]",
@@ -2334,7 +2332,7 @@
             "apiVersion": "2020-10-01",
             "name": "UpdatingDNSwithBackupADVM",
             "dependsOn": [
-                "[resourceId('Microsoft.Compute/virtualMachines/extensions', variables('vmName')[1], 'CreateBDC')]"
+                "Microsoft.Resources/deployments/ConfiguringBackupADVM"
             ],
             "properties": {
                 "mode": "Incremental",
