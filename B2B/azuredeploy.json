@@ -2130,6 +2130,82 @@
                 }
             }
         },
+		
+/* SQL VMS*/
+
+        {
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2020-10-01",
+            "name": "ProvisioningVMs",
+            "dependsOn": [
+                "Microsoft.Resources/deployments/CreatingNetworkInterfaces"
+            ],
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[variables('configuration').provisioningVMs]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "sqlAvailabilitySetName": {
+                        "value": "[variables('vmSettings').availabilitySets.sqlAvailabilitySetName]"
+                    },
+					"sqlStorageAccountName": {
+						"value": "[parameters('sqlStorageAccountName')]"
+					},
+                    "location": {
+                        "value": "[parameters('location')]"
+                    },
+                    "adminUsername": {
+                        "value": "[parameters('adminUsername')]"
+                    },
+                    "adminPassword": {
+                        "value": "[parameters('adminPassword')]"
+                    },
+                    "domainName": {
+                        "value": "[parameters('domainName')]"
+                    },
+					"vmContainerName": {
+					"value": "[variables('vmSettings').vmContainerName]"
+					},
+                    "sqlVMName": {
+                        "value": "[variables('vmSettings').sqlVMName]"
+                    },
+                    "sqlVMSize": {
+                        "value": "[parameters('sqlVMSize')]"
+                    },
+                    "fswImagePublisher": {
+                        "value": "[variables('vmSettings').windowsImagePublisher]"
+                    },
+                    "fswImageOffer": {
+                        "value": "[variables('vmSettings').windowsImageOffer]"
+                    },
+                    "fswImageSKU": {
+                        "value": "[variables('vmSettings').windowsImageSKU]"
+                    },
+                    "sqlImagePublisher": {
+                        "value": "[variables('vmSettings').sqlImagePublisher]"
+                    },
+                    "sqlImageOffer": {
+                        "value": "[variables('vmSettings').sqlImageOffer]"
+                    },
+                    "sqlImageSKU": {
+                        "value": "[variables(parameters('sqlServerVersion'))]"
+                    },
+                    "witnessVMSize": {
+                        "value": "[parameters('witnessVMSize')]"
+                    },
+                    "sqlwVMName": {
+                        "value": "[variables('vmSettings').sqlwVMName]"
+                    },
+                    "sqlwNicName": {
+                        "value": "[variables('sqlwNicName')]"
+                    }
+                }
+            }
+        }, 
+		
+		
 /*Domain Controller ADDS Tier Virtual Machine*/		
 		{
 			"type": "Microsoft.Compute/virtualMachines",
@@ -2221,13 +2297,13 @@
 				}
             }
         },
+		
         {
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2020-10-01",
             "name": "UpdatingDNStoPrimaryADVM",
             "dependsOn": [
-			     "Microsoft.Resources/deployments/ConfiguringBackupADVM"
-               /* "[resourceId('Microsoft.Compute/virtualMachines/extensions', variables('vmName')[0], 'InstallDomainController')]"*/
+                "[resourceId('Microsoft.Compute/virtualMachines/extensions', variables('vmName')[0], 'InstallDomainController')]"
             ],
             "properties": {
                 "mode": "Incremental",
@@ -2256,7 +2332,7 @@
                 }
             }
         },
-		
+		/*
 		{
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2020-10-01",
@@ -2297,7 +2373,7 @@
 					}
 				}
 		    }
-		},
+		}, */
 		
 		{
 		  "name": "ConfiguringBackupADVM",
@@ -2373,79 +2449,7 @@
                 }
             }
         },
-		
-
-        {
-            "type": "Microsoft.Resources/deployments",
-            "apiVersion": "2020-10-01",
-            "name": "ProvisioningVMs",
-            "dependsOn": [
-                "Microsoft.Resources/deployments/CreatingNetworkInterfaces"
-            ],
-            "properties": {
-                "mode": "Incremental",
-                "templateLink": {
-                    "uri": "[variables('configuration').provisioningVMs]",
-                    "contentVersion": "1.0.0.0"
-                },
-                "parameters": {
-                    "sqlAvailabilitySetName": {
-                        "value": "[variables('vmSettings').availabilitySets.sqlAvailabilitySetName]"
-                    },
-					"sqlStorageAccountName": {
-						"value": "[parameters('sqlStorageAccountName')]"
-					},
-                    "location": {
-                        "value": "[parameters('location')]"
-                    },
-                    "adminUsername": {
-                        "value": "[parameters('adminUsername')]"
-                    },
-                    "adminPassword": {
-                        "value": "[parameters('adminPassword')]"
-                    },
-                    "domainName": {
-                        "value": "[parameters('domainName')]"
-                    },
-					"vmContainerName": {
-					"value": "[variables('vmSettings').vmContainerName]"
-					},
-                    "sqlVMName": {
-                        "value": "[variables('vmSettings').sqlVMName]"
-                    },
-                    "sqlVMSize": {
-                        "value": "[parameters('sqlVMSize')]"
-                    },
-                    "fswImagePublisher": {
-                        "value": "[variables('vmSettings').windowsImagePublisher]"
-                    },
-                    "fswImageOffer": {
-                        "value": "[variables('vmSettings').windowsImageOffer]"
-                    },
-                    "fswImageSKU": {
-                        "value": "[variables('vmSettings').windowsImageSKU]"
-                    },
-                    "sqlImagePublisher": {
-                        "value": "[variables('vmSettings').sqlImagePublisher]"
-                    },
-                    "sqlImageOffer": {
-                        "value": "[variables('vmSettings').sqlImageOffer]"
-                    },
-                    "sqlImageSKU": {
-                        "value": "[variables(parameters('sqlServerVersion'))]"
-                    },
-                    "witnessVMSize": {
-                        "value": "[parameters('witnessVMSize')]"
-                    },
-                    "sqlwVMName": {
-                        "value": "[variables('vmSettings').sqlwVMName]"
-                    },
-                    "sqlwNicName": {
-                        "value": "[variables('sqlwNicName')]"
-                    }
-                }
-            }
-        }, 
+			
         {
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2020-10-01",
