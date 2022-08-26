@@ -6,13 +6,15 @@
       "type": "string",
       "metadata": {
         "description": "The name of the Administrator of the new VMs and Domain"
-      }
+      },
+	  "defaultValue": "contosoadmin"
     },
     "adminPassword": {
       "type": "securestring",
       "metadata": {
         "description": "The password for the Administrator account of the new VMs and Domain"
-      }
+      },
+	  "defaultValue": "Demo#1234321CA"
     },
     "adVMSize": {
       "type": "string",
@@ -53,13 +55,15 @@
       "type": "securestring",
       "metadata": {
         "description": "The SQL Server Service Account password"
-      }
+      },
+	  "defaultValue": "Demo#1234321CA"
     },
     "sqlStorageAccountName": {
       "type": "string",
       "metadata": {
         "description": "The name of Sql Server Storage Account"
-      }
+      },
+	  "defaultValue": "sqlstgjgjtyfhdg"
     },
     "sqlStorageAccountType": {
       "type": "string",
@@ -75,7 +79,8 @@
       "type": "string",
       "metadata": {
         "description": "The name of  DC Storage Account"
-      }
+      },
+	  "defaultValue": "dcstgdghgjhdg"
     },
     "dcStorageAccountType": {
       "type": "string",
@@ -197,11 +202,32 @@
     },
     "sqlServerVersion": {
       "type": "string",
+	  "allowedValues": [
+			"SQL2014SP2-WS2012R2",
+			"SQL2016-WS2012R2",
+			"SQL2017-WS2016",
+			"sql2019-ws2019",
+			"sql2019-ws2022"
+			],
       "metadata": {
         "description": "The Sql Server Version"
       },
-      "defaultValue": "sql2019-ws2019"
+      "defaultValue": "SQL2014SP2-WS2012R2"
     },
+	"operatingSystems": {
+      "type": "string",
+	  "allowedValues": [
+			"2012-R2-Datacenter",
+			"2016-Datacenter",
+			"2019-Datacenter",
+			"2022-Datacenter"
+			],
+      "metadata": {
+        "description": "The Windows Server Version"
+      },
+      "defaultValue": "2019-Datacenter"			
+	},	
+	
     "numberOfSqlVMDisks": {
       "type": "string",
       "allowedValues": [
@@ -267,7 +293,7 @@
       "sqlwVMName": "cluster-fsw",
       "windowsImagePublisher": "MicrosoftWindowsServer",
       "windowsImageOffer": "WindowsServer",
-      "windowsImageSKU": "2019-Datacenter",
+      "windowsImageSKU": "[parameters('operatingSystems')]",
       "sqlImagePublisher": "MicrosoftSQLServer",
       "sqlImageOffer": "[parameters('sqlServerVersion')]",
       "rdpPort": 3389,
