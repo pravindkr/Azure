@@ -18,7 +18,7 @@
       "metadata": {
         "description": "Type of Storage to be used for VM disks"
       },
-      "defaultValue": "Premium_LRS"
+      "defaultValue": "Standard_LRS"
     },
     "sqlVMSize": {
       "type": "string",
@@ -38,64 +38,73 @@
       "type": "string",
       "metadata": {
         "description": "DNS domain name for existing Active Directory domain"
-      }
+      },
+	  "defaultValue": "accops.local"
     },
     "adminUsername": {
       "type": "string",
       "metadata": {
         "description": "Name of the Administrator of the existing Active Directory Domain"
-      }
+      },
+	  "defaultValue": "accopsadmin"
     },
     "adminPassword": {
       "type": "securestring",
       "metadata": {
         "description": "Password for the Administrator account of the existing Active Directory Domain"
-      }
+      },
+	  "defaultValue": "Demo@1234567890"
     },
     "sqlServerServiceAccountUserName": {
       "type": "string",
       "metadata": {
         "description": "The SQL Server Service account name"
-      }
+      },
+	  "defaultValue": "sqlservice"
     },
     "sqlServerServiceAccountPassword": {
       "type": "securestring",
       "metadata": {
         "description": "The SQL Server Service account password"
-      }
+      },
+	  "defaultValue": "Demo@1234567890"
     },
     "existingSqlSubnetName": {
       "type": "string",
       "metadata": {
         "description": "Name of the existing subnet in the existing VNET to which the SQL & Witness VMs should be deployed"
-      }
+      },
+	  "defaultValue": "SQLSubnet"
     },
     "existingVirtualNetworkName": {
       "type": "string",
       "metadata": {
         "description": "Name of the existing VNET"
-      }
+      },
+	  "defaultValue": "AccopsDaasVNet"
+	  
     },
     "existingAdPDCVMName": {
       "type": "string",
       "maxLength": 15,
       "metadata": {
         "description": "Computer name of the existing Primary AD domain controller & DNS server"
-      }
+      },
+	  "defaultValue": "HQPDC"
     },
     "sqlLBIPAddress": {
       "type": "string",
       "metadata": {
         "description": "IP address of ILB for the SQL Server AlwaysOn listener to be created"
       },
-      "defaultValue": "10.0.0.9"
+      "defaultValue": "172.16.1.36"
     },
     "_artifactsLocation": {
       "type": "string",
       "metadata": {
         "description": "The base URI where artifacts required by this template are located including a trailing '/'"
       },
-      "defaultValue": "[deployment().properties.templateLink.uri]"
+      "defaultValue": "https://raw.githubusercontent.com/pravindkr/Azure/main/sql/azuredeploy.json"
     },
     "_artifactsLocationSasToken": {
       "type": "securestring",
