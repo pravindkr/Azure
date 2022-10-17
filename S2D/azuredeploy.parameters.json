@@ -6,22 +6,22 @@
       "value": "GEN-UNIQUE-8"
     },
     "existingDomainName": {
-      "value": "contoso.com"
+      "value": "accops.org"
     },
     "adminUsername": {
-      "value": "AzureAdmin"
+      "value": "vdiadmin"
     },
     "adminPassword": {
-      "value": "GEN-PASSWORD"
+      "value": "Mi49Bjl983yh189"
     },
     "existingVirtualNetworkName": {
-      "value": "vnet01"
+      "value": "UAT-VNET"
     },
     "existingVirtualNetworkRGName": {
-      "value": "rg01"
+      "value": "UAT"
     },    
     "existingSubnetName": {
-      "value": "default"
+      "value": "ADDS-SUBNET"
     }
   }
 }
